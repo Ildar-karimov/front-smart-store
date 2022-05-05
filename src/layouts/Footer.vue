@@ -1,15 +1,19 @@
 <template>
-<div class="">
-  footer
-</div>
+  <div class="p-8 flex items-center justify-between text-white bg-gray-700">
+    <p>Выполнил Каримов Ильдар</p>
+    <p>Разработка 2021 - {{ currentYear }}</p>
+  </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
-  name: "Footer"
-}
+  name: "Footer",
+  computed: {
+    currentYear(): string {
+      return new Date().getFullYear();
+    },
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
