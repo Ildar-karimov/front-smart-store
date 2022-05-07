@@ -1,5 +1,5 @@
 <template>
-  <div class="">Главная</div>
+  <div class="py-8">Главная</div>
 </template>
 
 <script lang="ts">

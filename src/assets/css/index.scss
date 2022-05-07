@@ -7,7 +7,6 @@ html, body, #app {
   height: 100%;
   padding: 0;
   margin: 0;
-  position: fixed;
 }
 
 * {
@@ -30,7 +29,6 @@ textarea {resize:horizontal;}
 body {
   background: #ffffff;
   font-family: 'Rubik', sans-serif;
-  overflow: hidden;
 }
 
 input:focus {

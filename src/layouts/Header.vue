@@ -20,12 +20,12 @@
       </div>
       <div v-else>Ильдар Каримов</div>
 
-      <div class="py-5 px-4 hover:bg-indigo-900">
+      <div class="header-nav-button">
         <el-badge :value="3" :max="5" class="item">
           <span>Избранное</span>
         </el-badge>
       </div>
-      <div class="py-5 px-4 hover:bg-indigo-900">
+      <div class="header-nav-button">
         <el-badge :value="3" :max="5" class="item" hidden>
           <span>Корзина</span>
         </el-badge>
@@ -41,4 +41,8 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style>
+.header-nav-button {
+  @apply py-5 px-4 hover:bg-indigo-900 cursor-pointer;
+}
+</style>

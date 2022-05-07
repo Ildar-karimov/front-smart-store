@@ -1,5 +1,7 @@
 <template>
-  <div class="p-8 flex items-center justify-between text-white bg-gray-700">
+  <div
+    class="px-8 py-4 flex items-center justify-between text-white bg-gray-700"
+  >
     <p>Выполнил Каримов Ильдар</p>
     <p>Разработка 2021 - {{ currentYear }}</p>
   </div>
@@ -9,7 +11,7 @@
 export default {
   name: "Footer",
   computed: {
-    currentYear(): string {
+    currentYear(): number {
       return new Date().getFullYear();
     },
   },

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header />
-    <div class="main" style="min-height: 80%">
+    <div class="main">
       <router-view />
     </div>
     <Footer />
@@ -23,4 +23,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.main {
+  min-height: 83.3%;
+}
+</style>
