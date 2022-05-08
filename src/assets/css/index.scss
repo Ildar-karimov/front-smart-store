@@ -27,7 +27,7 @@ textarea {resize:vertical;}
 textarea {resize:horizontal;}
 
 body {
-  background: #ffffff;
+  background: #f5f5f6;
   font-family: 'Rubik', sans-serif;
 }
 
@@ -41,4 +41,19 @@ input:focus {
   -khtml-user-select: none;
   -webkit-user-select: none;
   user-select: none;
+}
+
+::-webkit-scrollbar {
+  width: 1rem;
+  height: 0.5rem;
+  background-color: #f5f5f6;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: lighten(gray, 5%);
 }

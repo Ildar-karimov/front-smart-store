@@ -1,12 +1,49 @@
 <template>
-  <div class="py-8">Главная</div>
+  <div class="">
+    <el-carousel class="p-8 pb-0 rounded" trigger="click">
+      <el-carousel-item v-for="item in 4" :key="item" class="rounded-xl">
+        <img
+          src="https://cms.mvideo.ru/magnoliaPublic/.imaging/webp/dam/e88b8cda-9d3c-4476-a5c0-ba7d610ec63f"
+          class="h-full w-full object-cover cursor-pointer"
+        />
+      </el-carousel-item>
+    </el-carousel>
+
+    <div class="mt-8 p-8 bg-white">
+      <h2 class="font-bold text-2xl mb-6">Популярные товары</h2>
+      <div class="flex overflow-x-auto">
+        <ProductCardMini
+          v-for="item in 14"
+          :key="item"
+          class="mr-4 w-56"
+          style="min-width: 14rem"
+        />
+      </div>
+    </div>
+
+    <div class="p-8 bg-white">
+      <h2 class="font-bold text-2xl mb-6">Новинки</h2>
+      <div class="flex overflow-x-auto">
+        <ProductCardMini
+          v-for="item in 4"
+          :key="item"
+          class="mr-4 w-56"
+          style="min-width: 14rem"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import ProductCardMini from "@/components/ProductCardMini.vue";
 
 export default defineComponent({
   name: "Main",
+  components: {
+    ProductCardMini,
+  },
   props: {},
 });
 </script>
