@@ -5,6 +5,7 @@
     <p>Выполнил Каримов Ильдар</p>
     <p>Разработка 2021 - {{ currentYear }}</p>
   </div>
+  <el-backtop :right="10" :bottom="50" />
 </template>
 
 <script lang="ts">

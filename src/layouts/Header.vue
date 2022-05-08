@@ -3,7 +3,10 @@
     <div class="">
       <img src="../assets/img/logo.png" alt="Smart Store" class="h-12 w-36" />
     </div>
-    <div class="cursor-pointer hover:bg-indigo-900 text-white">
+    <div
+      class="cursor-pointer hover:bg-indigo-900 text-white"
+      @click="showCatalog"
+    >
       <div class="py-5 px-4">&#128269; Каталог</div>
     </div>
     <div class="">
@@ -15,7 +18,11 @@
       />
     </div>
     <div class="flex items-center text-white h-full">
-      <div v-if="true" class="py-5 px-4 cursor-pointer hover:bg-indigo-900">
+      <div
+        v-if="true"
+        class="py-5 px-4 cursor-pointer hover:bg-indigo-900"
+        @click="showLoginDialog"
+      >
         Войти
       </div>
       <div v-else>Ильдар Каримов</div>
@@ -32,13 +39,26 @@
       </div>
     </div>
   </div>
+
+  <LoginDialog ref="loginDialog" />
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+import LoginDialog from "@/views/LoginDialog.vue";
+
+export default defineComponent({
   name: "Header",
-  components: {},
-};
+  components: { LoginDialog },
+  methods: {
+    showLoginDialog() {
+      this.$refs.loginDialog.showDialog();
+    },
+    showCatalog() {
+      //
+    },
+  },
+});
 </script>
 
 <style>
