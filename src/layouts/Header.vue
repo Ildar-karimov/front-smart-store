@@ -41,21 +41,23 @@
   </div>
 
   <LoginDialog ref="loginDialog" />
+  <Catalog ref="catalog" />
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import LoginDialog from "@/views/LoginDialog.vue";
+import Catalog from "@/views/Catalog.vue";
 
 export default defineComponent({
   name: "Header",
-  components: { LoginDialog },
+  components: { LoginDialog, Catalog },
   methods: {
     showLoginDialog() {
-      this.$refs.loginDialog.showDialog();
+      (this.$refs["loginDialog"] as typeof LoginDialog).showDialog();
     },
     showCatalog() {
-      //
+      (this.$refs["catalog"] as typeof Catalog).showCatalog();
     },
   },
 });
