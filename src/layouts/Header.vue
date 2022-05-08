@@ -25,7 +25,20 @@
       >
         Войти
       </div>
-      <div v-else>Ильдар Каримов</div>
+      <el-dropdown v-else trigger="click">
+        <div
+          class="py-5 px-4 cursor-pointer hover:bg-indigo-900 text-white text-base"
+        >
+          Ильдар Каримов
+        </div>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item>Профиль</el-dropdown-item>
+            <el-dropdown-item>Заказы</el-dropdown-item>
+            <el-dropdown-item divided>Выйти</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
 
       <div class="header-nav-button">
         <el-badge :value="3" :max="5" class="item">
@@ -65,6 +78,7 @@ export default defineComponent({
 
 <style>
 .header-nav-button {
-  @apply py-5 px-4 hover:bg-indigo-900 cursor-pointer;
+  @apply hover:bg-indigo-900 cursor-pointer;
+  padding: 1.2rem 1rem;
 }
 </style>
