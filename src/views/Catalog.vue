@@ -1,5 +1,9 @@
 <template>
-  <el-dialog v-model="catalogVisible" title="Каталог" fullscreen>
+  <el-dialog v-model="catalogVisible" fullscreen>
+    <template #title>
+      <p class="font-bold text-2xl" style="color: #606266">Каталог</p>
+    </template>
+
     <div class="flex flex-wrap">
       <div
         v-for="category of [1, 2, 3]"
