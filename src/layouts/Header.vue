@@ -1,7 +1,9 @@
 <template>
   <div class="px-10 flex justify-between items-center h-16 bg-indigo-800">
     <div class="">
-      <img src="../assets/img/logo.png" alt="Smart Store" class="h-12 w-36" />
+      <router-link to="/">
+        <img src="../assets/img/logo.png" alt="Smart Store" class="h-12 w-36" />
+      </router-link>
     </div>
     <div
       class="cursor-pointer hover:bg-indigo-900 text-white"
