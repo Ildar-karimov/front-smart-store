@@ -1,6 +1,10 @@
 <template>
   <div class="">
-    <el-carousel class="p-8 pb-0 rounded" trigger="click">
+    <el-carousel
+      class="p-8 pb-0 rounded"
+      style="background-color: #f5f5f6"
+      trigger="click"
+    >
       <el-carousel-item v-for="item in 4" :key="item" class="rounded-xl">
         <img
           src="https://cms.mvideo.ru/magnoliaPublic/.imaging/webp/dam/e88b8cda-9d3c-4476-a5c0-ba7d610ec63f"
@@ -8,8 +12,9 @@
         />
       </el-carousel-item>
     </el-carousel>
+    <div class="py-4" style="background-color: #f5f5f6" />
 
-    <div class="mt-8 p-8 bg-white">
+    <div class="p-8">
       <h2 class="font-bold text-2xl mb-6">Популярные товары</h2>
       <div class="flex overflow-x-auto">
         <ProductCardMini
@@ -21,7 +26,7 @@
       </div>
     </div>
 
-    <div class="p-8 bg-white">
+    <div class="p-8">
       <h2 class="font-bold text-2xl mb-6">Новинки</h2>
       <div class="flex overflow-x-auto">
         <ProductCardMini
