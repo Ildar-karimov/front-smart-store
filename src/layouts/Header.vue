@@ -21,7 +21,7 @@
     </div>
     <div class="flex items-center text-white h-full">
       <div
-        v-if="true"
+        v-if="!isAuthorized"
         class="py-5 px-4 cursor-pointer hover:bg-indigo-900"
         @click="showLoginDialog"
       >
@@ -31,7 +31,7 @@
         <div
           class="py-5 px-4 cursor-pointer hover:bg-indigo-900 text-white text-base"
         >
-          Ильдар Каримов
+          {{ userShortName }}
         </div>
         <template #dropdown>
           <el-dropdown-menu>
@@ -63,10 +63,14 @@
 import { defineComponent } from "vue";
 import LoginDialog from "@/views/LoginDialog.vue";
 import Catalog from "@/views/Catalog.vue";
+import { mapGetters } from "vuex";
 
 export default defineComponent({
   name: "Header",
   components: { LoginDialog, Catalog },
+  computed: {
+    ...mapGetters(["user", "isAuthorized", "userShortName"]),
+  },
   methods: {
     showLoginDialog() {
       (this.$refs["loginDialog"] as typeof LoginDialog).showDialog();

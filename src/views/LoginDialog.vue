@@ -61,6 +61,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { AuthActions } from "@/store/auth/actions";
 
 export default defineComponent({
   name: "LoginDialog",
@@ -88,7 +89,10 @@ export default defineComponent({
       this.dialogVisible = true;
     },
     login() {
-      console.log();
+      this.$store.dispatch(AuthActions.LOGIN, this.authorization).then(() => {
+        alert("Добро пожаловать");
+        this.hideDialog();
+      });
     },
 
     showRegistration() {
