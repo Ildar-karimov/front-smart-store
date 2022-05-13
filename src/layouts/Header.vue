@@ -37,7 +37,7 @@
           <el-dropdown-menu>
             <el-dropdown-item>Профиль</el-dropdown-item>
             <el-dropdown-item>Заказы</el-dropdown-item>
-            <el-dropdown-item divided>Выйти</el-dropdown-item>
+            <el-dropdown-item @click="logout" divided>Выйти</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -64,6 +64,8 @@ import { defineComponent } from "vue";
 import LoginDialog from "@/views/LoginDialog.vue";
 import Catalog from "@/views/Catalog.vue";
 import { mapGetters } from "vuex";
+import { AuthActions } from "@/store/auth/actions";
+import { ElMessage } from "element-plus";
 
 export default defineComponent({
   name: "Header",
@@ -77,6 +79,10 @@ export default defineComponent({
     },
     showCatalog() {
       (this.$refs["catalog"] as typeof Catalog).showCatalog();
+    },
+    async logout() {
+      await this.$store.dispatch(AuthActions.LOGOUT);
+      ElMessage("Вы вышли из аккаунта.");
     },
   },
 });

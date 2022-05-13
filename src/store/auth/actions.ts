@@ -1,14 +1,16 @@
 import { ActionTree } from "vuex";
 import { AuthState, LoginBody, RegistrationBody } from "@/store/auth/types";
 import { RootState } from "@/store/types";
-import $api from "@/api";
+import $api, { API_URL } from "@/api";
 import { AuthMutations } from "@/store/auth/mutations";
+import axios from "axios";
 
 export enum AuthActions {
   LOGIN = "LOGIN",
   LOGOUT = "LOGOUT",
   REFRESH = "REFRESH",
   REGISTRATION = "REGISTRATION",
+  CHECK_AUTH = "CHECK_AUTH",
 }
 
 export const actions: ActionTree<AuthState, RootState> = {
@@ -18,12 +20,26 @@ export const actions: ActionTree<AuthState, RootState> = {
     localStorage.setItem("token", res.data.accessToken);
     context.commit(AuthMutations.SET_USER, res.data.user);
   },
+
   async [AuthActions.LOGOUT](context) {
     await $api.post("/user/logout");
     localStorage.removeItem("token");
     context.commit(AuthMutations.SET_IS_AUTHORIZED, false);
   },
+
   async [AuthActions.REGISTRATION](context, data: RegistrationBody) {
-    await $api.post("/user/registration", data);
+    const res = await $api.post("/user/registration", data);
+    context.commit(AuthMutations.SET_IS_AUTHORIZED, true);
+    localStorage.setItem("token", res.data.accessToken);
+    context.commit(AuthMutations.SET_USER, res.data.user);
+  },
+
+  async [AuthActions.CHECK_AUTH](context) {
+    const res = await axios.get(`${API_URL}/user/refresh`, {
+      withCredentials: true,
+    });
+    context.commit(AuthMutations.SET_IS_AUTHORIZED, true);
+    localStorage.setItem("token", res.data.accessToken);
+    context.commit(AuthMutations.SET_USER, res.data.user);
   },
 };

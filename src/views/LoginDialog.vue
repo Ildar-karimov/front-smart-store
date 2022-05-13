@@ -62,6 +62,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { AuthActions } from "@/store/auth/actions";
+import { ElMessage } from "element-plus";
 
 export default defineComponent({
   name: "LoginDialog",
@@ -89,10 +90,21 @@ export default defineComponent({
       this.dialogVisible = true;
     },
     login() {
-      this.$store.dispatch(AuthActions.LOGIN, this.authorization).then(() => {
-        alert("Добро пожаловать");
-        this.hideDialog();
-      });
+      this.$store
+        .dispatch(AuthActions.LOGIN, this.authorization)
+        .then(() => {
+          ElMessage({
+            message: "Добро пожаловать!",
+            type: "success",
+          });
+          this.hideDialog();
+        })
+        .catch(() => {
+          ElMessage({
+            message: "Неверный логин или пароль",
+            type: "error",
+          });
+        });
     },
 
     showRegistration() {
@@ -102,7 +114,21 @@ export default defineComponent({
       this.userRegistration = false;
     },
     registrUser() {
-      console.log();
+      this.$store
+        .dispatch(AuthActions.REGISTRATION, this.registration)
+        .then(() => {
+          ElMessage({
+            message: "Вы успешно зарегистрировались!",
+            type: "success",
+          });
+          this.hideDialog();
+        })
+        .catch(() => {
+          ElMessage({
+            message: "Проверьте поля",
+            type: "error",
+          });
+        });
     },
   },
 });
