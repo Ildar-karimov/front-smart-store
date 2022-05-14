@@ -19,4 +19,5 @@ export type Product = {
 export type getAllProductsParams = {
   brandId: number;
   rowsOnPageCount: number;
+  currentPage: number,
 };
