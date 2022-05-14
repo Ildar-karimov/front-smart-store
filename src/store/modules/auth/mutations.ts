@@ -1,5 +1,5 @@
 import { MutationTree } from "vuex";
-import { AuthState } from "@/store/auth/types";
+import { AuthState } from "@/store/modules/auth/types";
 
 export enum AuthMutations {
   SET_IS_AUTHORIZED = "SET_IS_AUTHORIZED",

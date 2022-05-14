@@ -61,7 +61,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { AuthActions } from "@/store/auth/actions";
+import { AuthActions } from "@/store/modules/auth/actions";
 import { ElMessage } from "element-plus";
 
 export default defineComponent({

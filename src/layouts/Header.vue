@@ -64,7 +64,7 @@ import { defineComponent } from "vue";
 import LoginDialog from "@/views/LoginDialog.vue";
 import Catalog from "@/views/Catalog.vue";
 import { mapGetters } from "vuex";
-import { AuthActions } from "@/store/auth/actions";
+import { AuthActions } from "@/store/modules/auth/actions";
 import { ElMessage } from "element-plus";
 
 export default defineComponent({

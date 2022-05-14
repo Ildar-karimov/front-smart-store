@@ -1,8 +1,12 @@
 import { ActionTree } from "vuex";
-import { AuthState, LoginBody, RegistrationBody } from "@/store/auth/types";
+import {
+  AuthState,
+  LoginBody,
+  RegistrationBody,
+} from "@/store/modules/auth/types";
 import { RootState } from "@/store/types";
 import $api, { API_URL } from "@/api";
-import { AuthMutations } from "@/store/auth/mutations";
+import { AuthMutations } from "@/store/modules/auth/mutations";
 import axios from "axios";
 
 export enum AuthActions {

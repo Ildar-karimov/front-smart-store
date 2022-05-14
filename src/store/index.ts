@@ -9,7 +9,7 @@
 
 import Vuex, { StoreOptions } from "vuex";
 import { RootState } from "@/store/types";
-import { auth } from "@/store/auth";
+import { auth } from "@/store/modules/auth";
 
 const store: StoreOptions<RootState> = {
   state: {
