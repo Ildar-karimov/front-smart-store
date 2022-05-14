@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col p-2 rounded border">
+  <div class="flex flex-col p-2 rounded border cursor-pointer">
     <img src="https://img.mvideo.ru/Pdb/small_pic/200/30062057b.jpg" alt="" />
     <p>Смартфон большой блабла крутой</p>
     <el-rate
@@ -8,7 +8,6 @@
       show-score
       text-color="#ff9900"
       :score-template="'10 отзывов'"
-      class="cursor-pointer"
     />
     <p>69999 ₽</p>
     <div class="flex text-xl">

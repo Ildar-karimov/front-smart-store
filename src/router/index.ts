@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import About from "@/views/About.vue";
 import Main from "@/views/Main.vue";
 import ProductPage from "@/views/ProductPage/index.vue";
+import ProductsPage from "@/views/ProductsPage/index.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -23,8 +24,17 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: "/products",
+    name: "ProductsPage",
+    component: ProductsPage,
+    meta: {
+      title: "Товары",
+      auth: false,
+    },
+  },
+  {
     path: "/product/:id",
-    name: "About",
+    name: "ProductPage",
     component: ProductPage,
     meta: {
       title: "Товар",
