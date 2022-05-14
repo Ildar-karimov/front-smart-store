@@ -9,7 +9,7 @@ import { ProductMutations } from "@/store/modules/product/mutations";
 
 export enum ProductActions {
   GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID",
-  GET_ALL_PRODUCTS = "",
+  GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS",
   CREATE_PRODUCT = "CREATE_PRODUCT",
 }
 
