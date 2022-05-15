@@ -11,13 +11,13 @@
 
     <el-collapse v-model="openedFilters" class="my-6">
       <el-collapse-item title="Цена" name="price">
-        <el-input v-model="filters.price.start" class="">
+        <el-input v-model="params.startPrice" class="">
           <template #prepend>
             <span class="w-4">От</span>
           </template>
         </el-input>
         <div class="py-1" />
-        <el-input v-model="filters.price.finish">
+        <el-input v-model="params.endPrice">
           <template #prepend>
             <span class="w-4">До</span>
           </template>
@@ -59,12 +59,6 @@ export default defineComponent({
   emits: ["update"],
   data: () => ({
     openedFilters: ["price"],
-    filters: {
-      price: {
-        start: null,
-        finish: null,
-      },
-    },
     params: null,
     filtersCount: 0,
   }),
@@ -74,17 +68,16 @@ export default defineComponent({
       if (this.params.brandId) {
         count++;
       }
+      if (this.params.startPrice || this.params.endPrice) {
+        count++;
+      }
       this.filtersCount = count;
     },
 
     clearFilters() {
-      this.filters = {
-        price: {
-          start: null,
-          finish: null,
-        },
-      };
       this.params.brandId = "";
+      this.params.startPrice = null;
+      this.params.endPrice = null;
       this.setFilters();
     },
 

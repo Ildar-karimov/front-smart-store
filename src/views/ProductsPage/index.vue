@@ -57,6 +57,8 @@ export default defineComponent({
       brandId: "",
       rowsOnPageCount: 10,
       currentPage: 1,
+      startPrice: null,
+      endPrice: null,
     },
   }),
   methods: {
