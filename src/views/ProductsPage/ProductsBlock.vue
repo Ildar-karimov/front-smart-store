@@ -79,32 +79,32 @@ export default defineComponent({
     isRowCardType: false,
     params: null,
 
-    selectedSortName: "Сначала популярные",
+    selectedSortName: "Сначала подешевле",
   }),
   computed: {
     ...mapGetters(["products", "allRowsCount"]),
     sorters() {
       return [
-        {
-          orderName: "Сначала популярные",
-          orderBy: "popular",
-          order: "DECS",
-        },
+        // {
+        //   orderName: "Сначала популярные",
+        //   orderBy: "popular",
+        //   order: "DESC",
+        // },
         {
           orderName: "Сначала подороже",
           orderBy: "price",
-          order: "DECS",
+          order: "DESC",
         },
         {
           orderName: "Сначала подешевле",
           orderBy: "price",
           order: "ASC",
         },
-        {
-          orderName: "Сначала с высоким рейтингом",
-          orderBy: "rate",
-          order: "DESC",
-        },
+        // {
+        //   orderName: "Сначала с высоким рейтингом",
+        //   orderBy: "rate",
+        //   order: "DESC",
+        // },
       ];
     },
   },
@@ -114,6 +114,7 @@ export default defineComponent({
       this.params.orderBy = sort.orderBy;
 
       this.selectedSortName = sort.orderName;
+      this.$emit("update");
     },
   },
   created() {

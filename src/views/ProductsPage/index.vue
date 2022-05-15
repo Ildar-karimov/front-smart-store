@@ -33,8 +33,8 @@ export default defineComponent({
   },
   data: () => ({
     params: {
-      orderBy: "popular",
-      order: "DESC",
+      orderBy: "price",
+      order: "ASC",
       brandId: "",
       rowsOnPageCount: 10,
       currentPage: 1,
