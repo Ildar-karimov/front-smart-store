@@ -24,6 +24,7 @@ import { defineComponent } from "vue";
 import FiltersBlock from "./FiltersBlock.vue";
 import ProductsBlock from "./ProductsBlock.vue";
 import { ProductActions } from "@/store/modules/product/actions";
+import { BrandActions } from "@/store/modules/brand/actions";
 
 export default defineComponent({
   name: "ProductsPage",
@@ -46,8 +47,13 @@ export default defineComponent({
     updateProducts() {
       this.$store.dispatch(ProductActions.GET_ALL_PRODUCTS, this.params);
     },
+
+    loadBaseData() {
+      this.$store.dispatch(BrandActions.GET_ALL_BRANDS);
+    },
   },
   mounted() {
+    this.loadBaseData();
     this.updateProducts();
   },
 });

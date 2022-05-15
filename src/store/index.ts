@@ -11,6 +11,7 @@ import Vuex, { StoreOptions } from "vuex";
 import { RootState } from "@/store/types";
 import { auth } from "@/store/modules/auth";
 import { product } from "@/store/modules/product";
+import { brand } from "@/store/modules/brand";
 
 const store: StoreOptions<RootState> = {
   state: {
@@ -19,6 +20,7 @@ const store: StoreOptions<RootState> = {
   modules: {
     auth,
     product,
+    brand,
   },
 };
 

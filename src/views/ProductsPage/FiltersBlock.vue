@@ -29,8 +29,12 @@
           placeholder="Выберите бренд"
           class="min-w-full"
         >
-          <el-option label="Panasonic" value="1" />
-          <el-option label="Apple" value="2" />
+          <el-option
+            v-for="brand in brands"
+            :key="brand.id"
+            :label="brand.name"
+            :value="brand.id"
+          />
         </el-select>
       </el-collapse-item>
       <el-collapse-item v-if="false" title="Что-нибудь" name="test">
@@ -47,6 +51,7 @@
 
 <script>
 import { defineComponent } from "vue";
+import { mapGetters } from "vuex";
 
 export default defineComponent({
   name: "FiltersBlock",
@@ -62,6 +67,9 @@ export default defineComponent({
     params: null,
     filtersCount: 0,
   }),
+  computed: {
+    ...mapGetters(["brands"]),
+  },
   methods: {
     calcFiltersCount() {
       let count = 0;
