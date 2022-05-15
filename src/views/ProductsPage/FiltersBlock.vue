@@ -1,6 +1,11 @@
 <template>
   <div>
-    <el-badge :value="1" class="item" type="primary">
+    <el-badge
+      :hidden="filtersCount === 0"
+      :value="filtersCount"
+      class="item"
+      type="primary"
+    >
       <h4>Фильтры</h4>
     </el-badge>
 
@@ -61,8 +66,17 @@ export default defineComponent({
       },
     },
     params: null,
+    filtersCount: 0,
   }),
   methods: {
+    calcFiltersCount() {
+      let count = 0;
+      if (this.params.brandId) {
+        count++;
+      }
+      this.filtersCount = count
+    },
+
     clearFilters() {
       this.filters = {
         price: {
@@ -75,6 +89,7 @@ export default defineComponent({
     },
 
     setFilters() {
+      this.calcFiltersCount();
       this.$emit("update");
     },
   },
