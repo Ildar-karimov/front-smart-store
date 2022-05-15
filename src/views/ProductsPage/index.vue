@@ -13,8 +13,18 @@
     </el-breadcrumb>
 
     <div class="flex px-8 pt-4 pb-8 bg-white">
-      <FiltersBlock class="w-1/4" />
-      <ProductsBlock class="w-3/4" :params="params" @set-sorters="setSorters" />
+      <FiltersBlock
+        class="w-1/4"
+        v-model="paramsCurrent"
+        @update="updateProducts"
+      />
+      <ProductsBlock
+        class="w-3/4"
+        v-model="paramsCurrent"
+        :sort-dropdown="params"
+        @set-sorters="setSorters"
+        @update="updateProducts"
+      />
     </div>
   </div>
 </template>
@@ -23,6 +33,7 @@
 import { defineComponent } from "vue";
 import FiltersBlock from "./FiltersBlock.vue";
 import ProductsBlock from "./ProductsBlock.vue";
+import { ProductActions } from "@/store/modules/product/actions";
 
 type sorters = {
   orderName: string;
@@ -42,6 +53,11 @@ export default defineComponent({
       orderBy: "popular",
       order: "DESC",
     },
+    paramsCurrent: {
+      brandId: "",
+      rowsOnPageCount: 10,
+      currentPage: 1,
+    },
   }),
   methods: {
     setSorters(sorters: sorters) {
@@ -49,6 +65,12 @@ export default defineComponent({
       this.params.orderBy = sorters.orderBy;
       this.params.order = sorters.order;
     },
+    updateProducts() {
+      this.$store.dispatch(ProductActions.GET_ALL_PRODUCTS, this.paramsCurrent);
+    },
+  },
+  mounted() {
+    this.updateProducts();
   },
 });
 </script>

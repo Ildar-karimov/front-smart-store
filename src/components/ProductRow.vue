@@ -3,9 +3,13 @@
     class="flex justify-between py-2 px-6 rounded border-2 shadow cursor-pointer"
   >
     <div class="flex">
-      <img src="https://img.mvideo.ru/Pdb/small_pic/200/30062057b.jpg" alt="" />
+      <img
+        :src="'http://localhost:5000/' + product.img"
+        alt=""
+        style="width: 14rem; height: 14rem"
+      />
       <div class="ml-8">
-        <p>Смартфон большой блабла крутой</p>
+        <p>{{ product.name }}</p>
         <el-rate
           v-model="rate"
           disabled
@@ -16,7 +20,9 @@
       </div>
     </div>
     <div class="flex flex-col justify-between">
-      <p class="text-right font-bold text-2xl text-gray-700">69999 ₽</p>
+      <p class="text-right font-bold text-2xl text-gray-700">
+        {{ product.price }} ₽
+      </p>
       <div class="flex mb-4">
         <button
           class="px-4 py-2 border rounded text-white bg-blue-500 hover:bg-blue-600"
@@ -38,6 +44,12 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "ProductCardMini",
+  props: {
+    product: {
+      type: Object,
+      required: true,
+    },
+  },
   data: () => ({
     rate: 3.7,
   }),

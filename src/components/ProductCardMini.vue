@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col p-2 rounded border cursor-pointer">
-    <img src="https://img.mvideo.ru/Pdb/small_pic/200/30062057b.jpg" alt="" />
-    <p>Смартфон большой блабла крутой</p>
+    <img :src="'http://localhost:5000/' + product.img" alt="" />
+    <p>{{ product.name }}</p>
     <el-rate
       v-model="rate"
       disabled
@@ -9,7 +9,7 @@
       text-color="#ff9900"
       :score-template="'10 отзывов'"
     />
-    <p>69999 ₽</p>
+    <p>{{ product.price }} ₽</p>
     <div class="flex text-xl">
       <button class="w-1/2 border rounded hover:bg-blue-100">&#128722;</button>
       <button class="w-1/2 border rounded font-bold hover:bg-red-100">
@@ -24,6 +24,12 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "ProductCardMini",
+  props: {
+    product: {
+      type: Object,
+      required: true,
+    },
+  },
   data: () => ({
     rate: 3.7,
   }),

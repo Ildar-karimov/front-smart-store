@@ -18,7 +18,7 @@ export const actions: ActionTree<ProductState, RootState> = {
     context,
     params: getAllProductsParams
   ) {
-    const res = await $api.get("/api/product", {
+    const res = await $api.get("/product", {
       params: params,
     });
     context.commit(ProductMutations.SET_PRODUCTS, res.data.rows);

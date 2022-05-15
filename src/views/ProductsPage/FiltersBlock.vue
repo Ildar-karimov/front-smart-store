@@ -20,9 +20,7 @@
       </el-collapse-item>
       <el-collapse-item title="Бренд" name="brand">
         <el-select
-          v-model="filters.brands"
-          multiple
-          collapse-tags
+          v-model="params.brandId"
           placeholder="Выберите бренд"
           class="min-w-full"
         >
@@ -30,7 +28,7 @@
           <el-option label="Apple" value="2" />
         </el-select>
       </el-collapse-item>
-      <el-collapse-item title="Что-нибудь" name="test">
+      <el-collapse-item v-if="false" title="Что-нибудь" name="test">
         <div>TEST</div>
       </el-collapse-item>
     </el-collapse>
@@ -47,6 +45,13 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "FiltersBlock",
+  props: {
+    modelValue: {
+      type: Object,
+      required: true,
+    },
+  },
+  emits: ["update"],
   data: () => ({
     openedFilters: ["price"],
     filters: {
@@ -54,8 +59,8 @@ export default defineComponent({
         start: null,
         finish: null,
       },
-      brands: [],
     },
+    params: null,
   }),
   methods: {
     clearFilters() {
@@ -64,12 +69,21 @@ export default defineComponent({
           start: null,
           finish: null,
         },
-        brands: [],
       };
+      this.params.brandId = "";
+      this.setFilters();
     },
 
     setFilters() {
-      console.log("at work..");
+      this.$emit("update");
+    },
+  },
+  created() {
+    this.params = this.modelValue;
+  },
+  watch: {
+    modelValue(value) {
+      this.params = value;
     },
   },
 });

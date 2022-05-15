@@ -3,7 +3,7 @@
     <div class="flex justify-end items-center">
       <el-dropdown trigger="click">
         <p class="text-blue-500 cursor-pointer hover:bg-blue-50">
-          {{ params.orderName }} &darr;&uarr;
+          {{ sortDropdown.orderName }} &darr;&uarr;
         </p>
         <template #dropdown>
           <el-dropdown-menu>
@@ -30,22 +30,32 @@
         inactive-text="карточки"
       />
     </div>
-    <div v-if="!isRowCardType" class="ml-8 mt-4 flex flex-wrap">
+    <div v-show="!isRowCardType" class="ml-8 mt-4 flex flex-wrap">
       <ProductCardMini
-        v-for="i in 10"
-        :key="i"
+        v-for="product in products"
+        :key="product.id"
+        :product="product"
         class="mr-8 mb-4 w-56"
         style="min-width: 14rem"
       />
     </div>
-    <div v-else class="ml-8 mt-4 flex flex-wrap">
-      <ProductRow v-for="i in 10" :key="i" class="mb-4 w-full" />
+    <div v-show="isRowCardType" class="ml-8 mt-4 flex flex-wrap">
+      <ProductRow
+        v-for="product in products"
+        :key="product.id"
+        :product="product"
+        class="mb-4 w-full"
+      />
     </div>
-    <div class="flex justify-center">
+    <div v-if="allRowsCount" class="flex justify-center">
       <el-pagination
         background
         layout="prev, pager, next"
-        :total="1000"
+        :total="allRowsCount"
+        v-model:current-page="params.currentPage"
+        @current-change="$emit('update')"
+        hide-on-single-page
+        :page-size="params.rowsOnPageCount"
         class=""
       />
     </div>
@@ -54,10 +64,9 @@
 
 <script>
 import { defineComponent } from "vue";
-import row from "../../assets/vector/row.svg";
-import card from "../../assets/vector/card.svg";
 import ProductCardMini from "@/components/ProductCardMini";
 import ProductRow from "@/components/ProductRow";
+import { mapGetters } from "vuex";
 
 export default defineComponent({
   name: "ProductsBlock",
@@ -66,21 +75,20 @@ export default defineComponent({
     ProductRow,
   },
   props: {
-    params: {
+    modelValue: {
+      type: Object,
+    },
+    sortDropdown: {
       type: Object,
     },
   },
-  emits: ["set-sorters"],
+  emits: ["set-sorters", "update"],
   data: () => ({
     isRowCardType: false,
+    params: null,
   }),
   computed: {
-    rowSvg() {
-      return row;
-    },
-    cardSvg() {
-      return card;
-    },
+    ...mapGetters(["products", "allRowsCount"]),
     popular() {
       return {
         orderName: "Сначала популярные",
@@ -113,6 +121,14 @@ export default defineComponent({
   methods: {
     setSort(sort) {
       this.$emit("set-sorters", sort);
+    },
+  },
+  created() {
+    this.params = this.modelValue;
+  },
+  watch: {
+    modelValue(value) {
+      this.params = value;
     },
   },
 });
