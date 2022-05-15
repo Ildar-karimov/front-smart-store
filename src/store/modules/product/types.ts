@@ -11,8 +11,6 @@ export type Product = {
   count: number;
   additional_products: any;
   img: string;
-  createdAt: string;
-  updatedAt: string;
   brandId: number;
 };
 

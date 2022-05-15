@@ -74,7 +74,7 @@ export default defineComponent({
       if (this.params.brandId) {
         count++;
       }
-      this.filtersCount = count
+      this.filtersCount = count;
     },
 
     clearFilters() {
