@@ -15,7 +15,11 @@ export type Product = {
 };
 
 export type getAllProductsParams = {
+  orderBy: string;
+  order: string;
   brandId: string;
   rowsOnPageCount: number;
-  currentPage: number,
+  currentPage: number;
+  startPrice: number | null;
+  endPrice: number | null;
 };

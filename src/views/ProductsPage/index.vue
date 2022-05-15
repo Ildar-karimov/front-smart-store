@@ -13,18 +13,8 @@
     </el-breadcrumb>
 
     <div class="flex px-8 pt-4 pb-8 bg-white">
-      <FiltersBlock
-        class="w-1/4"
-        v-model="paramsCurrent"
-        @update="updateProducts"
-      />
-      <ProductsBlock
-        class="w-3/4"
-        v-model="paramsCurrent"
-        :sort-dropdown="params"
-        @set-sorters="setSorters"
-        @update="updateProducts"
-      />
+      <FiltersBlock class="w-1/4" v-model="params" @update="updateProducts" />
+      <ProductsBlock class="w-3/4" v-model="params" @update="updateProducts" />
     </div>
   </div>
 </template>
@@ -35,12 +25,6 @@ import FiltersBlock from "./FiltersBlock.vue";
 import ProductsBlock from "./ProductsBlock.vue";
 import { ProductActions } from "@/store/modules/product/actions";
 
-type sorters = {
-  orderName: string;
-  orderBy: string;
-  order: string;
-};
-
 export default defineComponent({
   name: "ProductsPage",
   components: {
@@ -49,11 +33,8 @@ export default defineComponent({
   },
   data: () => ({
     params: {
-      orderName: "Сначала популярные",
       orderBy: "popular",
       order: "DESC",
-    },
-    paramsCurrent: {
       brandId: "",
       rowsOnPageCount: 10,
       currentPage: 1,
@@ -62,13 +43,8 @@ export default defineComponent({
     },
   }),
   methods: {
-    setSorters(sorters: sorters) {
-      this.params.orderName = sorters.orderName;
-      this.params.orderBy = sorters.orderBy;
-      this.params.order = sorters.order;
-    },
     updateProducts() {
-      this.$store.dispatch(ProductActions.GET_ALL_PRODUCTS, this.paramsCurrent);
+      this.$store.dispatch(ProductActions.GET_ALL_PRODUCTS, this.params);
     },
   },
   mounted() {

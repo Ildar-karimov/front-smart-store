@@ -3,21 +3,16 @@
     <div class="flex justify-end items-center">
       <el-dropdown trigger="click">
         <p class="text-blue-500 cursor-pointer hover:bg-blue-50">
-          {{ sortDropdown.orderName }} &darr;&uarr;
+          {{ selectedSortName }} &darr;&uarr;
         </p>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item @click="setSort(popular)"
-              >Сначала популярные
-            </el-dropdown-item>
-            <el-dropdown-item @click="setSort(priceAsc)"
-              >Сначала подешевле
-            </el-dropdown-item>
-            <el-dropdown-item @click="setSort(priceDesc)"
-              >Сначала подороже
-            </el-dropdown-item>
-            <el-dropdown-item @click="setSort(rateDesc)"
-              >Сначала с высоким рейтингом
+            <el-dropdown-item
+              v-for="(sorter, index) in sorters"
+              :key="index"
+              @click="setSort(sorter)"
+            >
+              {{ sorter.orderName }}
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
@@ -78,49 +73,47 @@ export default defineComponent({
     modelValue: {
       type: Object,
     },
-    sortDropdown: {
-      type: Object,
-    },
   },
-  emits: ["set-sorters", "update"],
+  emits: ["update"],
   data: () => ({
     isRowCardType: false,
     params: null,
+
+    selectedSortName: "Сначала популярные",
   }),
   computed: {
     ...mapGetters(["products", "allRowsCount"]),
-    popular() {
-      return {
-        orderName: "Сначала популярные",
-        orderBy: "popular",
-        order: "DECS",
-      };
-    },
-    priceDesc() {
-      return {
-        orderName: "Сначала подороже",
-        orderBy: "price",
-        order: "DECS",
-      };
-    },
-    priceAsc() {
-      return {
-        orderName: "Сначала подешевле",
-        orderBy: "price",
-        order: "ASC",
-      };
-    },
-    rateDesc() {
-      return {
-        orderName: "Сначала с высоким рейтингом",
-        orderBy: "rate",
-        order: "DESC",
-      };
+    sorters() {
+      return [
+        {
+          orderName: "Сначала популярные",
+          orderBy: "popular",
+          order: "DECS",
+        },
+        {
+          orderName: "Сначала подороже",
+          orderBy: "price",
+          order: "DECS",
+        },
+        {
+          orderName: "Сначала подешевле",
+          orderBy: "price",
+          order: "ASC",
+        },
+        {
+          orderName: "Сначала с высоким рейтингом",
+          orderBy: "rate",
+          order: "DESC",
+        },
+      ];
     },
   },
   methods: {
     setSort(sort) {
-      this.$emit("set-sorters", sort);
+      this.params.order = sort.order;
+      this.params.orderBy = sort.orderBy;
+
+      this.selectedSortName = sort.orderName;
     },
   },
   created() {
