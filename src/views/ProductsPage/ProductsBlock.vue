@@ -25,22 +25,43 @@
         inactive-text="карточки"
       />
     </div>
-    <div v-show="!isRowCardType" class="ml-8 mt-4 flex flex-wrap">
-      <ProductCardMini
-        v-for="product in products"
-        :key="product.id"
-        :product="product"
-        class="mr-8 mb-4 w-56"
-        style="min-width: 14rem"
+    <div v-show="!isRowCardType">
+      <div v-if="productsLoading" class="ml-8 mt-4 flex flex-wrap">
+        <ProductCardMiniSkeleton
+          v-for="i in 4"
+          :key="i"
+          class="mr-8 mb-4 w-56"
+          style="min-width: 14rem"
+        />
+      </div>
+      <el-empty
+        v-else-if="!productsLoading && products.length === 0"
+        description="По вашему запросу ничего не найдено"
       />
+      <div v-else class="ml-8 mt-4 flex flex-wrap">
+        <ProductCardMini
+          v-for="product in products"
+          :key="product.id"
+          :product="product"
+          class="mr-8 mb-4 w-56"
+          style="min-width: 14rem"
+        />
+      </div>
     </div>
-    <div v-show="isRowCardType" class="ml-8 mt-4 flex flex-wrap">
-      <ProductRow
-        v-for="product in products"
-        :key="product.id"
-        :product="product"
-        class="mb-4 w-full"
+    <div v-show="isRowCardType">
+      <el-skeleton v-if="productsLoading" :rows="20" animated />
+      <el-empty
+        v-else-if="!productsLoading && products.length === 0"
+        description="По вашему запросу ничего не найдено"
       />
+      <div v-else class="ml-8 mt-4 flex flex-wrap">
+        <ProductRow
+          v-for="product in products"
+          :key="product.id"
+          :product="product"
+          class="mb-4 w-full"
+        />
+      </div>
     </div>
     <div v-if="allRowsCount" class="flex justify-center">
       <el-pagination
@@ -60,6 +81,7 @@
 <script>
 import { defineComponent } from "vue";
 import ProductCardMini from "@/components/ProductCardMini";
+import ProductCardMiniSkeleton from "@/components/ProductCardMiniSkeleton";
 import ProductRow from "@/components/ProductRow";
 import { mapGetters } from "vuex";
 
@@ -68,6 +90,7 @@ export default defineComponent({
   components: {
     ProductCardMini,
     ProductRow,
+    ProductCardMiniSkeleton,
   },
   props: {
     modelValue: {
@@ -82,7 +105,7 @@ export default defineComponent({
     selectedSortName: "Сначала подешевле",
   }),
   computed: {
-    ...mapGetters(["products", "allRowsCount"]),
+    ...mapGetters(["products", "allRowsCount", "productsLoading"]),
     sorters() {
       return [
         // {

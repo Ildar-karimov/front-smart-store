@@ -12,4 +12,7 @@ export const getters: GetterTree<ProductState, RootState> = {
   allRowsCount(state): number | null {
     return state.allRowsCount;
   },
+  productsLoading(state): boolean {
+    return state.productsLoading;
+  },
 };

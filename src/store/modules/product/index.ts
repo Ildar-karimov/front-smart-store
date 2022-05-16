@@ -10,6 +10,7 @@ export const product: Module<ProductState, RootState> = {
     products: [],
     rowsOnPageCount: 10,
     allRowsCount: null,
+    productsLoading: false,
   },
   getters,
   mutations,

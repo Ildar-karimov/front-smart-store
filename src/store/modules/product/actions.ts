@@ -18,6 +18,7 @@ export const actions: ActionTree<ProductState, RootState> = {
     context,
     params: getAllProductsParams
   ) {
+    context.state.productsLoading = true;
     const res = await $api.get("/product", {
       params: params,
     });

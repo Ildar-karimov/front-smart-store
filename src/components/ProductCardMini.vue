@@ -12,7 +12,7 @@
     <p>{{ product.price }} ₽</p>
     <div class="flex text-xl">
       <button class="w-1/2 border rounded hover:bg-blue-100">&#128722;</button>
-      <button class="w-1/2 border rounded font-bold hover:bg-red-100">
+      <button class="ml-2 w-1/2 border rounded font-bold hover:bg-red-100">
         &#9825;
       </button>
     </div>
