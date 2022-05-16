@@ -18,8 +18,9 @@
       <h2 class="font-bold text-2xl mb-6">Популярные товары</h2>
       <div class="flex overflow-x-auto">
         <ProductCardMini
-          v-for="item in 14"
-          :key="item"
+          v-for="product in products"
+          :key="product.id"
+          :product="product"
           class="mr-4 w-56"
           style="min-width: 14rem"
         />
@@ -30,8 +31,9 @@
       <h2 class="font-bold text-2xl mb-6">Новинки</h2>
       <div class="flex overflow-x-auto">
         <ProductCardMini
-          v-for="item in 4"
-          :key="item"
+          v-for="product in products"
+          :key="product.id"
+          :product="product"
           class="mr-4 w-56"
           style="min-width: 14rem"
         />
@@ -43,6 +45,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import ProductCardMini from "@/components/ProductCardMini.vue";
+import { ProductActions } from "@/store/modules/product/actions";
+import { mapGetters } from "vuex";
 
 export default defineComponent({
   name: "Main",
@@ -50,6 +54,17 @@ export default defineComponent({
     ProductCardMini,
   },
   props: {},
+  computed: {
+    ...mapGetters(["products"]),
+  },
+  methods: {
+    updateProducts() {
+      this.$store.dispatch(ProductActions.GET_ALL_PRODUCTS);
+    },
+  },
+  mounted() {
+    this.updateProducts();
+  },
 });
 </script>
 
