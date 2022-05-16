@@ -59,7 +59,10 @@ export default defineComponent({
   },
   methods: {
     updateProducts() {
-      this.$store.dispatch(ProductActions.GET_ALL_PRODUCTS);
+      this.$store.dispatch(ProductActions.GET_ALL_PRODUCTS, {
+        rowsOnPageCount: 20,
+        currentPage: 1,
+      });
     },
   },
   mounted() {

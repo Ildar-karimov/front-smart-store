@@ -6,13 +6,13 @@
     <div class="flex pt-4">
       <div class="w-1/3">
         <img
-          src="https://img.mvideo.ru/Pdb/small_pic/200/10022392b.jpg"
+          :src="'http://localhost:5000/' + currentProduct.img"
           alt=""
           class="h-full w-full object-cover"
         />
       </div>
       <div class="pl-16 w-2/3">
-        <h2 class="mb-2 font-bold text-2xl">Робот-пылесос 2000china</h2>
+        <h2 class="mb-2 font-bold text-2xl">{{ currentProduct.name }}</h2>
         <el-rate
           v-model="rate"
           disabled
@@ -26,7 +26,7 @@
           cum doloribus facilis impedit in maiores qui quo repellat voluptatum!
         </p>
         <div class="mt-2 bg-gray-50 rounded px-2 py-4">
-          <div class="font-bold text-5xl">9990 ₽</div>
+          <div class="font-bold text-5xl">{{ currentProduct.price }} ₽</div>
           <div class="flex mt-4">
             <button
               class="px-6 py-4 border rounded text-white bg-blue-500 hover:bg-blue-600"
@@ -60,6 +60,8 @@
 import { defineComponent } from "vue";
 import RatesTab from "@/views/ProductPage/RatesTab";
 import InfoTab from "@/views/ProductPage/InfoTab";
+import { ProductActions } from "@/store/modules/product/actions";
+import { mapGetters } from "vuex";
 
 export default defineComponent({
   name: "ProductPage",
@@ -71,6 +73,20 @@ export default defineComponent({
     rate: 3.5,
     activeTab: "info",
   }),
+  computed: {
+    ...mapGetters(["currentProduct"]),
+  },
+  methods: {
+    updateProduct() {
+      this.$store.dispatch(
+        ProductActions.GET_PRODUCT_BY_ID,
+        this.$route.params.id
+      );
+    },
+  },
+  mounted() {
+    this.updateProduct();
+  },
 });
 </script>
 

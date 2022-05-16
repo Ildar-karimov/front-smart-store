@@ -8,9 +8,12 @@ import { actions } from "@/store/modules/product/actions";
 export const product: Module<ProductState, RootState> = {
   state: {
     products: [],
+    productsLoading: false,
+
     rowsOnPageCount: 10,
     allRowsCount: null,
-    productsLoading: false,
+
+    currentProduct: null,
   },
   getters,
   mutations,

@@ -1,6 +1,7 @@
 <template>
   <div
-    class="flex justify-between py-2 px-6 rounded border-2 shadow cursor-pointer"
+    @click="showProduct"
+    class="flex justify-between py-2 px-6 rounded border-2 shadow cursor-pointer hover:bg-green-50"
   >
     <div class="flex">
       <img
@@ -25,11 +26,13 @@
       </p>
       <div class="flex mb-4">
         <button
+          @click.stop
           class="px-4 py-2 border rounded text-white bg-blue-500 hover:bg-blue-600"
         >
           &#128722; В корзину
         </button>
         <button
+          @click.stop
           class="ml-4 px-4 py-2 border rounded text-white bg-red-500 hover:bg-red-600"
         >
           &#9825; В избранное
@@ -53,6 +56,11 @@ export default defineComponent({
   data: () => ({
     rate: 3.7,
   }),
+  methods: {
+    showProduct() {
+      this.$router.push({ path: `/product/${this.product.id}` });
+    },
+  },
 });
 </script>
 

@@ -25,4 +25,8 @@ export const actions: ActionTree<ProductState, RootState> = {
     context.commit(ProductMutations.SET_PRODUCTS, res.data.rows);
     context.commit(ProductMutations.SET_ALL_ROWS_COUNT, res.data.count);
   },
+  async [ProductActions.GET_PRODUCT_BY_ID](context, id) {
+    const res = await $api.get(`/product/${id}`);
+    context.commit(ProductMutations.SET_CURRENT_PRODUCT, res.data);
+  },
 };

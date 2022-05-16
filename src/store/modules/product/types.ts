@@ -3,6 +3,7 @@ export interface ProductState {
   rowsOnPageCount: number;
   allRowsCount: number | null;
   productsLoading: boolean;
+  currentProduct: Product | null;
 }
 
 export type Product = {

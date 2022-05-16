@@ -15,4 +15,7 @@ export const getters: GetterTree<ProductState, RootState> = {
   productsLoading(state): boolean {
     return state.productsLoading;
   },
+  currentProduct(state): Product | null {
+    return state.currentProduct;
+  },
 };

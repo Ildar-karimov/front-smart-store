@@ -1,5 +1,8 @@
 <template>
-  <div class="flex flex-col p-2 rounded border cursor-pointer">
+  <div
+    @click="showProduct"
+    class="flex flex-col p-2 rounded border cursor-pointer"
+  >
     <img :src="'http://localhost:5000/' + product.img" alt="" />
     <p>{{ product.name }}</p>
     <el-rate
@@ -11,8 +14,13 @@
     />
     <p>{{ product.price }} ₽</p>
     <div class="flex text-xl">
-      <button class="w-1/2 border rounded hover:bg-blue-100">&#128722;</button>
-      <button class="ml-2 w-1/2 border rounded font-bold hover:bg-red-100">
+      <button @click.stop class="w-1/2 border rounded hover:bg-blue-100">
+        &#128722;
+      </button>
+      <button
+        @click.stop
+        class="ml-2 w-1/2 border rounded font-bold hover:bg-red-100"
+      >
         &#9825;
       </button>
     </div>
@@ -33,6 +41,11 @@ export default defineComponent({
   data: () => ({
     rate: 3.7,
   }),
+  methods: {
+    showProduct() {
+      this.$router.push({ path: `/product/${this.product.id}` });
+    },
+  },
 });
 </script>
 
