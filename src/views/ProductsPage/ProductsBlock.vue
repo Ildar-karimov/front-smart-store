@@ -26,7 +26,7 @@
       />
     </div>
     <div v-show="!isRowCardType">
-      <div v-if="productsLoading" class="ml-8 mt-4 flex flex-wrap">
+      <div v-if="productsLoading !== 2" class="ml-8 mt-4 flex flex-wrap">
         <ProductCardMiniSkeleton
           v-for="i in 4"
           :key="i"
@@ -35,7 +35,7 @@
         />
       </div>
       <el-empty
-        v-else-if="!productsLoading && products.length === 0"
+        v-else-if="productsLoading === 2 && products.length === 0"
         description="По вашему запросу ничего не найдено"
       />
       <div v-else class="ml-8 mt-4 flex flex-wrap">

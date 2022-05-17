@@ -1,5 +1,5 @@
 <template>
-  <div class="p-8">
+  <div v-if="currentProductLoading === 2" class="p-8">
     <el-button type="text">
       <span class="text-xl">Категория пылесосы</span>
     </el-button>
@@ -74,7 +74,7 @@ export default defineComponent({
     activeTab: "info",
   }),
   computed: {
-    ...mapGetters(["currentProduct"]),
+    ...mapGetters(["currentProduct", "currentProductLoading"]),
   },
   methods: {
     updateProduct() {

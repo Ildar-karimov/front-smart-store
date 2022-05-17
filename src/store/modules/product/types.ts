@@ -2,8 +2,9 @@ export interface ProductState {
   products: Product[];
   rowsOnPageCount: number;
   allRowsCount: number | null;
-  productsLoading: boolean;
+  productsLoading: number;
   currentProduct: Product | null;
+  currentProductLoading: number;
 }
 
 export type Product = {

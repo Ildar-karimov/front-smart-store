@@ -1,5 +1,5 @@
 import { ActionTree } from "vuex";
-import { RootState } from "@/store/types";
+import { Loading, RootState } from "@/store/types";
 import $api from "@/api";
 import {
   getAllProductsParams,
@@ -18,14 +18,16 @@ export const actions: ActionTree<ProductState, RootState> = {
     context,
     params: getAllProductsParams
   ) {
-    context.state.productsLoading = true;
+    context.state.productsLoading = Loading.LOADING;
     const res = await $api.get("/product", {
       params: params,
     });
     context.commit(ProductMutations.SET_PRODUCTS, res.data.rows);
     context.commit(ProductMutations.SET_ALL_ROWS_COUNT, res.data.count);
   },
+
   async [ProductActions.GET_PRODUCT_BY_ID](context, id) {
+    context.state.currentProductLoading = Loading.LOADING;
     const res = await $api.get(`/product/${id}`);
     context.commit(ProductMutations.SET_CURRENT_PRODUCT, res.data);
   },
