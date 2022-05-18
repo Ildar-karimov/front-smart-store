@@ -54,7 +54,13 @@
         </el-badge>
       </div>
       <div class="header-nav-button">
-        <el-badge :value="3" :max="5" class="item" hidden>
+        <el-badge
+          @click="showBasketPage"
+          :value="3"
+          :max="5"
+          class="item"
+          hidden
+        >
           <span>Корзина</span>
         </el-badge>
       </div>
@@ -78,11 +84,6 @@ export default defineComponent({
   components: { LoginDialog, Catalog },
   computed: {
     ...mapGetters(["user", "isAuthorized", "userShortName", "likedProducts"]),
-    likedProductsCount() {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      return JSON.parse(localStorage.getItem("likedProducts")).length || 0;
-    },
   },
   methods: {
     showLoginDialog() {
@@ -97,6 +98,13 @@ export default defineComponent({
     },
     showLikedProductsPage() {
       this.$router.push({ path: "/liked-products" });
+    },
+    showBasketPage() {
+      if (this.isAuthorized) {
+        this.$router.push({ path: "/" });
+      } else {
+        ElMessage("Авторизуйтесь для того, чтобы открыть корзину.");
+      }
     },
   },
 });

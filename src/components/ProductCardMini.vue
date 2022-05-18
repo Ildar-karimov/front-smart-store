@@ -14,7 +14,11 @@
     />
     <p>{{ product.price }} ₽</p>
     <div class="flex text-xl">
-      <button @click.stop class="w-1/2 border rounded hover:bg-blue-100">
+      <button
+        @click.stop
+        @click="addToBasket"
+        class="w-1/2 border rounded hover:bg-blue-100"
+      >
         &#128722;
       </button>
       <button
@@ -47,7 +51,7 @@ export default defineComponent({
     rate: 3.7,
   }),
   computed: {
-    ...mapGetters(["likedProducts"]),
+    ...mapGetters(["likedProducts", "isAuthorized"]),
 
     isLiked() {
       let isLiked = false;
@@ -87,6 +91,17 @@ export default defineComponent({
           message: "Добавлено в избранное!",
           type: "success",
         });
+      }
+    },
+
+    addToBasket() {
+      if (this.isAuthorized) {
+        ElMessage({
+          message: "Добавлено в корзину!",
+          type: "success",
+        });
+      } else {
+        ElMessage("Авторизуйтесь для того, чтобы добавить в корзину.");
       }
     },
   },

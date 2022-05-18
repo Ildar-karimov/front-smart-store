@@ -27,6 +27,7 @@
       <div class="flex mb-4">
         <button
           @click.stop
+          @click="addToBasket"
           class="px-4 py-2 border rounded text-white bg-blue-500 hover:bg-blue-600"
         >
           &#128722; В корзину
@@ -62,7 +63,7 @@ export default defineComponent({
     rate: 3.7,
   }),
   computed: {
-    ...mapGetters(["likedProducts"]),
+    ...mapGetters(["likedProducts", "isAuthorized"]),
 
     isLiked() {
       let isLiked = false;
@@ -102,6 +103,17 @@ export default defineComponent({
           message: "Добавлено в избранное!",
           type: "success",
         });
+      }
+    },
+
+    addToBasket() {
+      if (this.isAuthorized) {
+        ElMessage({
+          message: "Добавлено в корзину!",
+          type: "success",
+        });
+      } else {
+        ElMessage("Авторизуйтесь для того, чтобы добавить в корзину.");
       }
     },
   },
