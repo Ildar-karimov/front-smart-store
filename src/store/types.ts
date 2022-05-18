@@ -7,3 +7,8 @@ export enum Loading {
   LOADING,
   LOADING_DONE,
 }
+
+export enum userRoles {
+  ADMIN = "ADMIN",
+  USER = "USER",
+}

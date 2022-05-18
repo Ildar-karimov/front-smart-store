@@ -4,6 +4,9 @@ import Main from "@/views/Main.vue";
 import ProductPage from "@/views/ProductPage/index.vue";
 import ProductsPage from "@/views/ProductsPage/index.vue";
 import LikedProductsPage from "@/views/LikedProductsPage.vue";
+import store from "@/store/index";
+import { AuthActions } from "@/store/modules/auth/actions";
+import { userRoles } from "@/store/types";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -59,3 +62,28 @@ const router = createRouter({
 });
 
 export default router;
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.auth)) {
+    const user = store.getters.user;
+    if (user) {
+      if (from.path === to.path) {
+        next();
+      } else {
+        store
+          .dispatch(AuthActions.CHECK_AUTH)
+          .then(() => {
+            const role = to.meta.role;
+            if (role === userRoles.ADMIN) {
+              next();
+            } else {
+              next();
+            }
+          })
+          .catch(() => next("/"));
+      }
+    }
+  } else {
+    next();
+  }
+});
