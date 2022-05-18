@@ -49,9 +49,9 @@
       </div>
     </div>
     <div v-show="isRowCardType">
-      <el-skeleton v-if="productsLoading" :rows="20" animated />
+      <el-skeleton v-if="productsLoading !== 2" :rows="20" animated />
       <el-empty
-        v-else-if="!productsLoading && products.length === 0"
+        v-else-if="productsLoading === 2 && products.length === 0"
         description="По вашему запросу ничего не найдено"
       />
       <div v-else class="ml-8 mt-4 flex flex-wrap">

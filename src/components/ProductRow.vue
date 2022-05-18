@@ -33,9 +33,11 @@
         </button>
         <button
           @click.stop
+          @click="addToLikedProducts"
           class="ml-4 px-4 py-2 border rounded text-white bg-red-500 hover:bg-red-600"
+          :class="{ liked: isLiked }"
         >
-          &#9825; В избранное
+          {{ isLiked ? "Добавлен" : "&#9825; В избранное" }}
         </button>
       </div>
     </div>
@@ -44,6 +46,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { mapGetters } from "vuex";
+import { LikedProductMutations } from "@/store/modules/likedProduct/mutations";
+import { ElMessage } from "element-plus";
 
 export default defineComponent({
   name: "ProductCardMini",
@@ -56,9 +61,48 @@ export default defineComponent({
   data: () => ({
     rate: 3.7,
   }),
+  computed: {
+    ...mapGetters(["likedProducts"]),
+
+    isLiked() {
+      let isLiked = false;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      this.likedProducts.forEach((product) => {
+        if (this.product.id === product?.id) {
+          isLiked = true;
+        }
+      });
+
+      return isLiked;
+    },
+  },
   methods: {
     showProduct() {
       this.$router.push({ path: `/product/${this.product.id}` });
+    },
+
+    addToLikedProducts() {
+      if (this.isLiked) {
+        this.$store.commit(
+          LikedProductMutations.DELETE_LIKED_PRODUCT,
+          this.product
+        );
+
+        ElMessage({
+          message: "Удалено из избранного",
+          type: "info",
+        });
+      } else {
+        this.$store.commit(
+          LikedProductMutations.ADD_LIKED_PRODUCT,
+          this.product
+        );
+        ElMessage({
+          message: "Добавлено в избранное!",
+          type: "success",
+        });
+      }
     },
   },
 });
@@ -67,5 +111,7 @@ export default defineComponent({
 <style scoped>
 .liked {
   color: red;
+  background-color: #fff;
+  border: red 2px solid;
 }
 </style>

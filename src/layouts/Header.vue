@@ -43,7 +43,12 @@
       </el-dropdown>
 
       <div class="header-nav-button">
-        <el-badge :value="likedProductsCount" :max="5" class="item">
+        <el-badge
+          :value="likedProducts.length"
+          :max="5"
+          class="item"
+          :hidden="likedProducts.length === 0"
+        >
           <span>Избранное</span>
         </el-badge>
       </div>
@@ -71,7 +76,7 @@ export default defineComponent({
   name: "Header",
   components: { LoginDialog, Catalog },
   computed: {
-    ...mapGetters(["user", "isAuthorized", "userShortName"]),
+    ...mapGetters(["user", "isAuthorized", "userShortName", "likedProducts"]),
     likedProductsCount() {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore

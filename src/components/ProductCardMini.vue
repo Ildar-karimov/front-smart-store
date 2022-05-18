@@ -32,6 +32,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { ElMessage } from "element-plus";
+import { mapGetters } from "vuex";
+import { LikedProductMutations } from "@/store/modules/likedProduct/mutations";
 
 export default defineComponent({
   name: "ProductCardMini",
@@ -43,60 +45,50 @@ export default defineComponent({
   },
   data: () => ({
     rate: 3.7,
-    isLiked: false,
   }),
-  computed: {},
+  computed: {
+    ...mapGetters(["likedProducts"]),
+
+    isLiked() {
+      let isLiked = false;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      this.likedProducts.forEach((product) => {
+        if (this.product.id === product?.id) {
+          isLiked = true;
+        }
+      });
+
+      return isLiked;
+    },
+  },
   methods: {
     showProduct() {
       this.$router.push({ path: `/product/${this.product.id}` });
     },
 
-    checkIsProductLiked() {
-      let likedProducts =
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        JSON.parse(localStorage.getItem("likedProducts")) || [];
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      likedProducts.forEach((product) => {
-        if (this.product.id === product?.id) {
-          this.isLiked = true;
-        }
-      });
-    },
-
     addToLikedProducts() {
-      let likedProducts =
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        JSON.parse(localStorage.getItem("likedProducts")) || [];
-      let deleted = false;
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      likedProducts.forEach((product, index) => {
-        if (this.product.id === product?.id) {
-          likedProducts.splice(index, 1);
-          deleted = true;
-          this.isLiked = false;
-          ElMessage({
-            message: "Удалено из избранных",
-            type: "info",
-          });
-        }
-      });
-      if (!deleted) {
-        likedProducts.push(this.product);
-        this.isLiked = true;
+      if (this.isLiked) {
+        this.$store.commit(
+          LikedProductMutations.DELETE_LIKED_PRODUCT,
+          this.product
+        );
+
+        ElMessage({
+          message: "Удалено из избранного",
+          type: "info",
+        });
+      } else {
+        this.$store.commit(
+          LikedProductMutations.ADD_LIKED_PRODUCT,
+          this.product
+        );
         ElMessage({
           message: "Добавлено в избранное!",
           type: "success",
         });
       }
-      localStorage.setItem("likedProducts", JSON.stringify(likedProducts));
     },
-  },
-  mounted() {
-    this.checkIsProductLiked();
   },
 });
 </script>
