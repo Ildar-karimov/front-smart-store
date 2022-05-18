@@ -44,6 +44,7 @@
 
       <div class="header-nav-button">
         <el-badge
+          @click="showLikedProductsPage"
           :value="likedProducts.length"
           :max="5"
           class="item"
@@ -93,6 +94,9 @@ export default defineComponent({
     async logout() {
       await this.$store.dispatch(AuthActions.LOGOUT);
       ElMessage("Вы вышли из аккаунта.");
+    },
+    showLikedProductsPage() {
+      this.$router.push({ path: "/liked-products" });
     },
   },
 });

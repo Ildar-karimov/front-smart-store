@@ -3,6 +3,7 @@ import About from "@/views/About.vue";
 import Main from "@/views/Main.vue";
 import ProductPage from "@/views/ProductPage/index.vue";
 import ProductsPage from "@/views/ProductsPage/index.vue";
+import LikedProductsPage from "@/views/LikedProductsPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -36,6 +37,15 @@ const routes: Array<RouteRecordRaw> = [
     path: "/product/:id",
     name: "ProductPage",
     component: ProductPage,
+    meta: {
+      title: "Товар",
+      auth: false,
+    },
+  },
+  {
+    path: "/liked-products",
+    name: "LikedProductsPage",
+    component: LikedProductsPage,
     meta: {
       title: "Товар",
       auth: false,
