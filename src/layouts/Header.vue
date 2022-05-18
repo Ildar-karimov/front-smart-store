@@ -101,7 +101,7 @@ export default defineComponent({
     },
     showBasketPage() {
       if (this.isAuthorized) {
-        this.$router.push({ path: "/" });
+        this.$router.push({ path: "/basket" });
       } else {
         ElMessage("Авторизуйтесь для того, чтобы открыть корзину.");
       }

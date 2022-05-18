@@ -4,6 +4,7 @@ import Main from "@/views/Main.vue";
 import ProductPage from "@/views/ProductPage/index.vue";
 import ProductsPage from "@/views/ProductsPage/index.vue";
 import LikedProductsPage from "@/views/LikedProductsPage.vue";
+import BasketPage from "@/views/BasketPage.vue";
 import store from "@/store/index";
 import { AuthActions } from "@/store/modules/auth/actions";
 import { userRoles } from "@/store/types";
@@ -52,6 +53,16 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: "Товар",
       auth: false,
+    },
+  },
+  {
+    path: "/basket",
+    name: "BasketPage",
+    component: BasketPage,
+    meta: {
+      title: "Корзина",
+      auth: true,
+      role: userRoles.USER,
     },
   },
 ];
