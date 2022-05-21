@@ -45,9 +45,8 @@
         </template>
       </el-dropdown>
 
-      <div class="header-nav-button">
+      <div @click="showLikedProductsPage" class="header-nav-button">
         <el-badge
-          @click="showLikedProductsPage"
           :value="likedProducts.length"
           :max="5"
           class="item"
@@ -56,14 +55,8 @@
           <span>Избранное</span>
         </el-badge>
       </div>
-      <div class="header-nav-button">
-        <el-badge
-          @click="showBasketPage"
-          :value="3"
-          :max="5"
-          class="item"
-          hidden
-        >
+      <div @click="showBasketPage" class="header-nav-button">
+        <el-badge :value="3" :max="5" class="item" hidden>
           <span>Корзина</span>
         </el-badge>
       </div>
