@@ -9,7 +9,10 @@
       class="cursor-pointer hover:bg-indigo-900 text-white"
       @click="showCatalog"
     >
-      <div class="py-5 px-4">&#128269; Каталог</div>
+      <div class="flex items-center py-5 px-4">
+        <img src="../assets/img/catalog-icon.svg" class="h-4 w-4 mr-2" />
+        Каталог
+      </div>
     </div>
     <div class="">
       <el-autocomplete

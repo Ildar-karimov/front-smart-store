@@ -3,7 +3,7 @@ export interface ProductState {
   rowsOnPageCount: number;
   allRowsCount: number | null;
   productsLoading: number;
-  currentProduct: Product | null;
+  currentProduct: currentProduct | null;
   currentProductLoading: number;
 }
 
@@ -12,9 +12,19 @@ export type Product = {
   name: string;
   price: number;
   count: number;
-  additional_products: any;
   img: string;
   brandId: number;
+};
+
+export type currentProduct = {
+  id: number;
+  name: string;
+  price: number;
+  count: number;
+  img: string;
+  brandId: number;
+  additionalProducts: Product[],
+  info: any,
 };
 
 export type getAllProductsParams = {

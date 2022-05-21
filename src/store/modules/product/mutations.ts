@@ -1,5 +1,9 @@
 import { MutationTree } from "vuex";
-import { Product, ProductState } from "@/store/modules/product/types";
+import {
+  currentProduct,
+  Product,
+  ProductState,
+} from "@/store/modules/product/types";
 import { Loading } from "@/store/types";
 
 export enum ProductMutations {
@@ -16,7 +20,7 @@ export const mutations: MutationTree<ProductState> = {
   [ProductMutations.SET_ALL_ROWS_COUNT](state, count: number) {
     state.allRowsCount = count;
   },
-  [ProductMutations.SET_CURRENT_PRODUCT](state, product: Product) {
+  [ProductMutations.SET_CURRENT_PRODUCT](state, product: currentProduct) {
     state.currentProduct = product;
     state.currentProductLoading = Loading.LOADING_DONE;
   },
