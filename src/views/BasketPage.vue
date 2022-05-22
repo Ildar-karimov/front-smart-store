@@ -8,17 +8,43 @@
     </el-breadcrumb>
 
     <div class="flex justify-center px-8 pt-4 pb-8 bg-white">
-      <el-empty v-if="true" description="Корзина пуста." />
-      <div v-else class="ml-8 mt-4 flex flex-wrap"></div>
+      <el-skeleton v-if="basketProductsLoading !== 2" :rows="20" animated />
+      <el-empty
+        v-else-if="basketProductsLoading === 2 && basketProductsCount === 0"
+        description="По вашему запросу ничего не найдено"
+      />
+      <div v-else class="ml-8 mt-4 flex">
+        <div class="w-2/3 flex flex-wrap">
+          <ProductRow
+            v-for="product in basketProducts"
+            :key="product.id"
+            :product="product"
+            class="mb-4 w-full"
+          />
+        </div>
+        <div class="w-1/3">Итог</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { defineComponent } from "vue";
+import { mapGetters } from "vuex";
+import ProductRow from "@/components/ProductRow";
 
 export default defineComponent({
   name: "BasketPage",
+  components: {
+    ProductRow,
+  },
+  computed: {
+    ...mapGetters([
+      "basketProducts",
+      "basketProductsLoading",
+      "basketProductsCount",
+    ]),
+  },
 });
 </script>
 

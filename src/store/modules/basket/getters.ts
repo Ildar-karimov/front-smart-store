@@ -10,4 +10,7 @@ export const getters: GetterTree<BasketState, RootState> = {
   basketProductsCount(state): number {
     return state.basketProducts.length;
   },
+  basketProductsLoading(state): number {
+    return state.basketProductsLoading;
+  },
 };

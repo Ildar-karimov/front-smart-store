@@ -31,8 +31,10 @@
             <button
               @click="addToBasket"
               class="px-6 py-4 border rounded text-white bg-blue-500 hover:bg-blue-600"
+              :class="{ 'at-basket': isAtBasket }"
+              :disabled="basketBtnLoading"
             >
-              &#128722; В корзину
+              {{ isAtBasket ? "&#128722; Добавлен" : "&#128722; В корзину" }}
             </button>
             <button
               @click="addToLikedProducts"
@@ -80,6 +82,7 @@ import { mapGetters } from "vuex";
 import { ElMessage } from "element-plus";
 import { LikedProductMutations } from "@/store/modules/likedProduct/mutations";
 import ProductCardMini from "@/components/ProductCardMini";
+import { BasketActions } from "@/store/modules/basket/actions";
 
 export default defineComponent({
   name: "ProductPage",
@@ -91,6 +94,7 @@ export default defineComponent({
   data: () => ({
     rate: 3.5,
     activeTab: "info",
+    basketBtnLoading: false,
   }),
   computed: {
     ...mapGetters([
@@ -98,6 +102,7 @@ export default defineComponent({
       "currentProductLoading",
       "likedProducts",
       "isAuthorized",
+      "basketProducts",
     ]),
 
     isLiked() {
@@ -111,6 +116,17 @@ export default defineComponent({
       });
 
       return isLiked;
+    },
+
+    isAtBasket() {
+      let isAtBasket = false;
+      this.basketProducts.forEach((product) => {
+        if (this.currentProduct.id === product.id) {
+          isAtBasket = true;
+        }
+      });
+
+      return isAtBasket;
     },
   },
   methods: {
@@ -146,10 +162,27 @@ export default defineComponent({
 
     addToBasket() {
       if (this.isAuthorized) {
-        ElMessage({
-          message: "Добавлено в корзину!",
-          type: "success",
-        });
+        this.basketBtnLoading = true;
+        if (this.isAtBasket) {
+          this.$store
+            .dispatch(BasketActions.REMOVE_BASKET_PRODUCT, this.currentProduct)
+            .then(() => {
+              this.$store.dispatch(BasketActions.GET_BASKET_PRODUCTS);
+              this.basketBtnLoading = false;
+              ElMessage("Товар удален из корзины.");
+            });
+        } else {
+          this.$store
+            .dispatch(BasketActions.CREATE_BASKET_PRODUCT, this.currentProduct)
+            .then(() => {
+              this.$store.dispatch(BasketActions.GET_BASKET_PRODUCTS);
+              this.basketBtnLoading = false;
+              ElMessage({
+                message: "Добавлено в корзину!",
+                type: "success",
+              });
+            });
+        }
       } else {
         ElMessage("Авторизуйтесь для того, чтобы добавить в корзину.");
       }
@@ -163,8 +196,16 @@ export default defineComponent({
 
 <style scoped>
 .liked {
+  @apply hover:bg-red-100;
   color: red;
   background-color: #fff;
   border: red 2px solid;
+}
+
+.at-basket {
+  @apply hover:bg-blue-100;
+  color: blue;
+  background-color: #fff;
+  border: blue 2px solid;
 }
 </style>

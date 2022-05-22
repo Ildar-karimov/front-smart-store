@@ -14,6 +14,7 @@ import { defineComponent } from "vue";
 import Header from "./Header.vue";
 import Footer from "./Footer.vue";
 import { AuthActions } from "@/store/modules/auth/actions";
+import { BasketActions } from "@/store/modules/basket/actions";
 
 export default defineComponent({
   name: "mainBlock",
@@ -23,7 +24,9 @@ export default defineComponent({
   },
   mounted() {
     if (localStorage.getItem("token")) {
-      this.$store.dispatch(AuthActions.CHECK_AUTH);
+      this.$store.dispatch(AuthActions.CHECK_AUTH).then(() => {
+        this.$store.dispatch(BasketActions.GET_BASKET_PRODUCTS);
+      });
     }
   },
 });

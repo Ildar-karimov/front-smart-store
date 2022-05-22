@@ -63,6 +63,7 @@
 import { defineComponent } from "vue";
 import { AuthActions } from "@/store/modules/auth/actions";
 import { ElMessage } from "element-plus";
+import { BasketActions } from "@/store/modules/basket/actions";
 
 export default defineComponent({
   name: "LoginDialog",
@@ -98,6 +99,7 @@ export default defineComponent({
             type: "success",
           });
           this.hideDialog();
+          this.$store.dispatch(BasketActions.GET_BASKET_PRODUCTS);
         })
         .catch(() => {
           ElMessage({

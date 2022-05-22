@@ -76,8 +76,7 @@ export default router;
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.auth)) {
-    const user = store.getters.user;
-    if (user) {
+    if (store.getters.isAuthorized) {
       if (from.path === to.path) {
         next();
       } else {

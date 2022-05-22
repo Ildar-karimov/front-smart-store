@@ -18,6 +18,8 @@
         @click.stop
         @click="addToBasket"
         class="w-1/2 border rounded hover:bg-blue-100"
+        :class="{ 'at-basket': isAtBasket }"
+        :disabled="basketBtnLoading"
       >
         &#128722;
       </button>
@@ -38,6 +40,8 @@ import { defineComponent } from "vue";
 import { ElMessage } from "element-plus";
 import { mapGetters } from "vuex";
 import { LikedProductMutations } from "@/store/modules/likedProduct/mutations";
+import { BasketActions } from "@/store/modules/basket/actions";
+import { Product } from "@/store/modules/product/types";
 
 export default defineComponent({
   name: "ProductCardMini",
@@ -49,9 +53,10 @@ export default defineComponent({
   },
   data: () => ({
     rate: 3.7,
+    basketBtnLoading: false,
   }),
   computed: {
-    ...mapGetters(["likedProducts", "isAuthorized"]),
+    ...mapGetters(["likedProducts", "isAuthorized", "basketProducts"]),
 
     isLiked() {
       let isLiked = false;
@@ -64,6 +69,17 @@ export default defineComponent({
       });
 
       return isLiked;
+    },
+
+    isAtBasket() {
+      let isAtBasket = false;
+      this.basketProducts.forEach((product: Product) => {
+        if (this.product.id === product.id) {
+          isAtBasket = true;
+        }
+      });
+
+      return isAtBasket;
     },
   },
   methods: {
@@ -96,10 +112,27 @@ export default defineComponent({
 
     addToBasket() {
       if (this.isAuthorized) {
-        ElMessage({
-          message: "Добавлено в корзину!",
-          type: "success",
-        });
+        this.basketBtnLoading = true;
+        if (this.isAtBasket) {
+          this.$store
+            .dispatch(BasketActions.REMOVE_BASKET_PRODUCT, this.product)
+            .then(() => {
+              this.$store.dispatch(BasketActions.GET_BASKET_PRODUCTS);
+              this.basketBtnLoading = false;
+              ElMessage("Товар удален из корзины.");
+            });
+        } else {
+          this.$store
+            .dispatch(BasketActions.CREATE_BASKET_PRODUCT, this.product)
+            .then(() => {
+              this.$store.dispatch(BasketActions.GET_BASKET_PRODUCTS);
+              this.basketBtnLoading = false;
+              ElMessage({
+                message: "Добавлено в корзину!",
+                type: "success",
+              });
+            });
+        }
       } else {
         ElMessage("Авторизуйтесь для того, чтобы добавить в корзину.");
       }
@@ -111,5 +144,9 @@ export default defineComponent({
 <style scoped>
 .liked {
   color: red;
+}
+
+.at-basket {
+  @apply bg-blue-400 text-blue-500;
 }
 </style>

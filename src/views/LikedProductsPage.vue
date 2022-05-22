@@ -12,7 +12,7 @@
         v-if="likedProducts.length === 0"
         description="Список избранного пуст."
       />
-      <div v-else class="ml-8 mt-4 flex flex-wrap">
+      <div v-else class="w-2/3 ml-8 mt-4 flex flex-wrap">
         <ProductRow
           v-for="product in likedProducts"
           :key="product.id"

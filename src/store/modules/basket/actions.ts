@@ -1,5 +1,5 @@
 import { ActionTree } from "vuex";
-import { RootState } from "@/store/types";
+import { Loading, RootState } from "@/store/types";
 import $api from "@/api";
 import { BasketState } from "@/store/modules/basket/types";
 import { BasketMutations } from "@/store/modules/basket/mutations";
@@ -13,6 +13,7 @@ export enum BasketActions {
 
 export const actions: ActionTree<BasketState, RootState> = {
   async [BasketActions.GET_BASKET_PRODUCTS](context) {
+    context.state.basketProductsLoading = Loading.LOADING;
     const res = await $api.get("/order/product-basket");
     context.commit(BasketMutations.SET_BASKET_PRODUCTS, res.data);
   },
@@ -22,6 +23,6 @@ export const actions: ActionTree<BasketState, RootState> = {
   },
 
   async [BasketActions.REMOVE_BASKET_PRODUCT](context, product) {
-    await $api.delete("/order/delete-product-basket", product);
+    await $api.delete("/order/delete-product-basket/" + product.id);
   },
 };

@@ -79,7 +79,7 @@ import Catalog from "@/views/Catalog.vue";
 import { mapGetters } from "vuex";
 import { AuthActions } from "@/store/modules/auth/actions";
 import { ElMessage } from "element-plus";
-import { BasketActions } from "@/store/modules/basket/actions";
+import { BasketMutations } from "@/store/modules/basket/mutations";
 
 export default defineComponent({
   name: "Header",
@@ -97,6 +97,7 @@ export default defineComponent({
     },
     async logout() {
       await this.$store.dispatch(AuthActions.LOGOUT);
+      this.$store.commit(BasketMutations.SET_BASKET_PRODUCTS, []);
       ElMessage("Вы вышли из аккаунта.");
     },
     showLikedProductsPage() {
@@ -109,12 +110,6 @@ export default defineComponent({
         ElMessage("Авторизуйтесь для того, чтобы открыть корзину.");
       }
     },
-    updateBasketProducts() {
-      this.$store.dispatch(BasketActions.GET_BASKET_PRODUCTS);
-    },
-  },
-  mounted() {
-    this.updateBasketProducts();
   },
 });
 </script>
