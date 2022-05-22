@@ -56,7 +56,12 @@
         </el-badge>
       </div>
       <div @click="showBasketPage" class="header-nav-button">
-        <el-badge :value="3" :max="5" class="item" hidden>
+        <el-badge
+          :value="basketProductsCount"
+          :max="5"
+          class="item"
+          :hidden="basketProductsCount === 0"
+        >
           <span>Корзина</span>
         </el-badge>
       </div>
@@ -74,12 +79,14 @@ import Catalog from "@/views/Catalog.vue";
 import { mapGetters } from "vuex";
 import { AuthActions } from "@/store/modules/auth/actions";
 import { ElMessage } from "element-plus";
+import { BasketActions } from "@/store/modules/basket/actions";
 
 export default defineComponent({
   name: "Header",
   components: { LoginDialog, Catalog },
   computed: {
     ...mapGetters(["user", "isAuthorized", "userShortName", "likedProducts"]),
+    ...mapGetters(["basketProductsCount"]),
   },
   methods: {
     showLoginDialog() {
@@ -102,6 +109,12 @@ export default defineComponent({
         ElMessage("Авторизуйтесь для того, чтобы открыть корзину.");
       }
     },
+    updateBasketProducts() {
+      this.$store.dispatch(BasketActions.GET_BASKET_PRODUCTS);
+    },
+  },
+  mounted() {
+    this.updateBasketProducts();
   },
 });
 </script>
