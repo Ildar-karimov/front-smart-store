@@ -40,6 +40,9 @@
           <el-dropdown-menu>
             <el-dropdown-item>Профиль</el-dropdown-item>
             <el-dropdown-item>Заказы</el-dropdown-item>
+            <el-dropdown-item v-if="isUserAdmin" divided>
+              Добавить товар
+            </el-dropdown-item>
             <el-dropdown-item @click="logout" divided>Выйти</el-dropdown-item>
           </el-dropdown-menu>
         </template>
@@ -80,6 +83,7 @@ import { mapGetters } from "vuex";
 import { AuthActions } from "@/store/modules/auth/actions";
 import { ElMessage } from "element-plus";
 import { BasketMutations } from "@/store/modules/basket/mutations";
+import { userRoles } from "@/store/types";
 
 export default defineComponent({
   name: "Header",
@@ -87,6 +91,9 @@ export default defineComponent({
   computed: {
     ...mapGetters(["user", "isAuthorized", "userShortName", "likedProducts"]),
     ...mapGetters(["basketProductsCount"]),
+    isUserAdmin() {
+      return this.$store.getters.isGranted(userRoles.ADMIN);
+    },
   },
   methods: {
     showLoginDialog() {

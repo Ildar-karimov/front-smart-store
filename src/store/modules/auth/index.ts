@@ -13,7 +13,7 @@ export const auth: Module<AuthState, RootState> = {
       name: "",
       surname: "",
       email: "",
-      roles: [],
+      role: "",
     },
   },
   getters,

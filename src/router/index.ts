@@ -84,7 +84,9 @@ router.beforeEach((to, from, next) => {
           .then(() => {
             const role = to.meta.role;
             if (role === userRoles.ADMIN) {
-              next();
+              if (store.getters.isGranted(userRoles.ADMIN)) {
+                next();
+              } else next("/");
             } else {
               next();
             }
