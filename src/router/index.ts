@@ -62,7 +62,6 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: "Корзина",
       auth: true,
-      role: userRoles.USER,
     },
   },
 ];
@@ -76,7 +75,7 @@ export default router;
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.auth)) {
-    if (store.getters.isAuthorized) {
+    if (localStorage.getItem("token")) {
       if (from.path === to.path) {
         next();
       } else {

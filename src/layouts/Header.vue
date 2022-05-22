@@ -98,6 +98,9 @@ export default defineComponent({
     async logout() {
       await this.$store.dispatch(AuthActions.LOGOUT);
       this.$store.commit(BasketMutations.SET_BASKET_PRODUCTS, []);
+      if (this.$route.meta.auth) {
+        await this.$router.push({ path: "/" });
+      }
       ElMessage("Вы вышли из аккаунта.");
     },
     showLikedProductsPage() {
