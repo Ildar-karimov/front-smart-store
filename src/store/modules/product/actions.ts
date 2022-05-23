@@ -14,6 +14,19 @@ export enum ProductActions {
 }
 
 export const actions: ActionTree<ProductState, RootState> = {
+  async [ProductActions.CREATE_PRODUCT](context, product) {
+    const formData = new FormData();
+    Object.keys(product).forEach((key) => {
+      if (Array.isArray(product[key])) {
+        formData.append(key, JSON.stringify(product[key]));
+      } else formData.append(key, product[key]);
+    });
+
+    await $api.post("/product/create", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  },
+
   async [ProductActions.GET_ALL_PRODUCTS](
     context,
     params: getAllProductsParams

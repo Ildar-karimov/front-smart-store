@@ -40,7 +40,11 @@
           <el-dropdown-menu>
             <el-dropdown-item>Профиль</el-dropdown-item>
             <el-dropdown-item>Заказы</el-dropdown-item>
-            <el-dropdown-item v-if="isUserAdmin" divided>
+            <el-dropdown-item
+              v-if="isUserAdmin"
+              @click="showCreateProductPage"
+              divided
+            >
               Добавить товар
             </el-dropdown-item>
             <el-dropdown-item @click="logout" divided>Выйти</el-dropdown-item>
@@ -96,6 +100,9 @@ export default defineComponent({
     },
   },
   methods: {
+    showCreateProductPage() {
+      this.$router.push({ path: "/create-product" });
+    },
     showLoginDialog() {
       (this.$refs["loginDialog"] as typeof LoginDialog).showDialog();
     },

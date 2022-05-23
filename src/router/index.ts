@@ -5,6 +5,7 @@ import ProductPage from "@/views/ProductPage/index.vue";
 import ProductsPage from "@/views/ProductsPage/index.vue";
 import LikedProductsPage from "@/views/LikedProductsPage.vue";
 import BasketPage from "@/views/BasketPage.vue";
+import CreateProductPage from "@/views/CreateProductPage/index.vue";
 import store from "@/store/index";
 import { AuthActions } from "@/store/modules/auth/actions";
 import { userRoles } from "@/store/types";
@@ -64,6 +65,16 @@ const routes: Array<RouteRecordRaw> = [
       auth: true,
     },
   },
+  {
+    path: "/create-product",
+    name: "CreateProductPage",
+    component: CreateProductPage,
+    meta: {
+      title: "Создать товар",
+      auth: true,
+      role: userRoles.ADMIN,
+    },
+  },
 ];
 
 const router = createRouter({
@@ -93,7 +104,7 @@ router.beforeEach((to, from, next) => {
           })
           .catch(() => next("/"));
       }
-    }
+    } else next("/");
   } else {
     next();
   }
