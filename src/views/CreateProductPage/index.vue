@@ -45,7 +45,37 @@
           </el-upload>
         </el-form-item>
 
-        <el-form-item>
+        <p>Характеристики</p>
+        <div class="mb-4 w-full flex justify-between border-b-4 border-dotted">
+          <p class="text-gray-500">Название</p>
+          <p class="font-medium">Значение</p>
+        </div>
+        <div
+          v-for="(infoRow, index) in newProduct.info"
+          :key="index"
+          class="flex justify-between mb-4"
+        >
+          <el-input v-model="infoRow.title" class="mr-40" />
+          <el-input v-model="infoRow.description" />
+        </div>
+        <el-button @click="addInfoRow" circle class="mt-4 p-3">+</el-button>
+
+        <el-form-item label="Сопутствующие товары" class="mt-4">
+          <el-select
+            v-model="newProduct.additionalProducts"
+            multiple
+            filterable
+            remote
+            reserve-keyword
+            placeholder="Введите для поиска товара"
+            :remote-method="() => {}"
+            class="w-1/2"
+          >
+            <el-option label="Умная розетка" :value="1" />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item class="mt-4">
           <el-button type="primary" @click="createProduct">
             Создать товар
           </el-button>
@@ -60,6 +90,7 @@ import { defineComponent } from "vue";
 import { mapGetters } from "vuex";
 import { BrandActions } from "@/store/modules/brand/actions";
 import { ProductActions } from "@/store/modules/product/actions";
+import { ElMessage } from "element-plus";
 
 export default defineComponent({
   name: "CreateProductPage",
@@ -78,12 +109,23 @@ export default defineComponent({
     ...mapGetters(["brands"]),
   },
   methods: {
+    addInfoRow() {
+      this.newProduct.info.push({ title: "", description: "" });
+    },
+
     setImg(uploadFile) {
       this.newProduct.img = uploadFile.raw;
     },
 
     createProduct() {
-      this.$store.dispatch(ProductActions.CREATE_PRODUCT, this.newProduct);
+      this.$store
+        .dispatch(ProductActions.CREATE_PRODUCT, this.newProduct)
+        .then(() => {
+          ElMessage({
+            message: "Добавлено в избранное!",
+            type: "success",
+          });
+        });
     },
   },
   mounted() {
