@@ -6,6 +6,7 @@ import ProductsPage from "@/views/ProductsPage/index.vue";
 import LikedProductsPage from "@/views/LikedProductsPage.vue";
 import BasketPage from "@/views/BasketPage.vue";
 import CreateProductPage from "@/views/CreateProductPage/index.vue";
+import Orders from "@/views/Orders.vue";
 import store from "@/store/index";
 import { AuthActions } from "@/store/modules/auth/actions";
 import { userRoles } from "@/store/types";
@@ -73,6 +74,15 @@ const routes: Array<RouteRecordRaw> = [
       title: "Создать товар",
       auth: true,
       role: userRoles.ADMIN,
+    },
+  },
+  {
+    path: "/orders",
+    name: "Orders",
+    component: Orders,
+    meta: {
+      title: "Заказы",
+      auth: true,
     },
   },
 ];

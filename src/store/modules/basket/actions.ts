@@ -10,6 +10,9 @@ export enum BasketActions {
   CREATE_BASKET_PRODUCT = "CREATE_BASKET_PRODUCT",
   REMOVE_BASKET_PRODUCT = "REMOVE_BASKET_PRODUCT",
   CREATE_ORDER = "CREATE_ORDER",
+  GET_USER_ORDERS = "GET_USER_ORDERS",
+  GET_ALL_ORDERS = "GET_ALL_ORDERS",
+  CHANGE_ORDER_STATUS = "CHANGE_ORDER_STATUS",
 }
 
 export const actions: ActionTree<BasketState, RootState> = {
@@ -29,5 +32,17 @@ export const actions: ActionTree<BasketState, RootState> = {
 
   async [BasketActions.CREATE_ORDER]() {
     await $api.get("/order/create-order");
+  },
+
+  async [BasketActions.GET_ALL_ORDERS]() {
+    return await $api.get("/order/all-orders");
+  },
+
+  async [BasketActions.GET_USER_ORDERS]() {
+    return await $api.get("/order/user-orders");
+  },
+
+  async [BasketActions.CHANGE_ORDER_STATUS](context, body) {
+    return await $api.post("/order/change-status", body);
   },
 };

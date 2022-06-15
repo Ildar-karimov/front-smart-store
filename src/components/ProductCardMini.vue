@@ -6,6 +6,7 @@
     <img :src="'http://localhost:5000/' + product.img" alt="" />
     <p>{{ product.name }}</p>
     <el-rate
+      v-if="!disablePanel"
       v-model="rate"
       disabled
       show-score
@@ -13,7 +14,7 @@
       :score-template="'10 отзывов'"
     />
     <p>{{ product.price }} ₽</p>
-    <div class="flex text-xl">
+    <div v-if="!disablePanel" class="flex text-xl">
       <button
         @click.stop
         @click="addToBasket"
@@ -49,6 +50,11 @@ export default defineComponent({
     product: {
       type: Object,
       required: true,
+    },
+    disablePanel: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   data: () => ({

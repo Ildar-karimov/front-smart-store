@@ -39,7 +39,7 @@
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item>Профиль</el-dropdown-item>
-            <el-dropdown-item>Заказы</el-dropdown-item>
+            <el-dropdown-item @click="showOrders">Заказы</el-dropdown-item>
             <el-dropdown-item
               v-if="isUserAdmin"
               @click="showCreateProductPage"
@@ -100,6 +100,9 @@ export default defineComponent({
     },
   },
   methods: {
+    showOrders() {
+      this.$router.push({ path: "/orders" });
+    },
     showCreateProductPage() {
       this.$router.push({ path: "/create-product" });
     },
