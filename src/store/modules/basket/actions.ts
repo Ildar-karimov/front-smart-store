@@ -9,6 +9,7 @@ export enum BasketActions {
   GET_BASKET_PRODUCTS = "GET_BASKET_PRODUCTS",
   CREATE_BASKET_PRODUCT = "CREATE_BASKET_PRODUCT",
   REMOVE_BASKET_PRODUCT = "REMOVE_BASKET_PRODUCT",
+  CREATE_ORDER = "CREATE_ORDER",
 }
 
 export const actions: ActionTree<BasketState, RootState> = {
@@ -24,5 +25,9 @@ export const actions: ActionTree<BasketState, RootState> = {
 
   async [BasketActions.REMOVE_BASKET_PRODUCT](context, product) {
     await $api.delete("/order/delete-product-basket/" + product.id);
+  },
+
+  async [BasketActions.CREATE_ORDER]() {
+    await $api.get("/order/create-order");
   },
 };

@@ -37,7 +37,7 @@
           </div>
 
           <div class="flex justify-center mt-16">
-            <el-button type="primary" size="large" plain>
+            <el-button @click="createOrder" type="primary" size="large" plain>
               Оформить заказ
             </el-button>
           </div>
@@ -51,6 +51,8 @@
 import { defineComponent } from "vue";
 import { mapGetters } from "vuex";
 import ProductRow from "@/components/ProductRow";
+import { BasketActions } from "@/store/modules/basket/actions";
+import { ElMessage } from "element-plus";
 
 export default defineComponent({
   name: "BasketPage",
@@ -66,6 +68,18 @@ export default defineComponent({
 
     basketSum() {
       return this.basketProducts.reduce((sum, i) => sum + i.price, 0);
+    },
+  },
+
+  methods: {
+    createOrder() {
+      this.$store.dispatch(BasketActions.CREATE_ORDER).then(() => {
+        ElMessage({
+          message: "Заказ оформлен!",
+          type: "success",
+        });
+        this.$store.dispatch(BasketActions.GET_BASKET_PRODUCTS);
+      });
     },
   },
 });
