@@ -6,17 +6,15 @@
 
     <div class="flex flex-wrap">
       <div
-        v-for="category of [1, 2, 3]"
-        :key="category"
+        v-for="category of categories"
+        :key="category.id"
+        @click="showCategoryProducts(category.id)"
         class="flex flex-col px-8 py-4"
       >
-        <p class="category">Основная категория {{ category }}</p>
-        <span
-          v-for="subCategory of [1, 2, 3]"
-          :key="subCategory"
-          class="sub-category"
-        >
-          Подкатегория {{ subCategory }}
+        <p class="category">{{ category.name }}</p>
+        <span class="sub-category">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit,
+          ullam?
         </span>
       </div>
     </div>
@@ -25,22 +23,32 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from "vue";
+import $api from "@/api";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "Catalog",
   setup() {
+    const router = useRouter();
     const state = reactive({
       catalogVisible: false,
+      categories: [],
     });
 
-    const showCatalog = () => {
+    const showCatalog = async () => {
       state.catalogVisible = true;
+      await $api.get("category").then((res) => (state.categories = res.data));
     };
     const hideCatalog = () => {
       state.catalogVisible = false;
     };
 
-    return { ...toRefs(state), showCatalog, hideCatalog };
+    const showCategoryProducts = (categoryId: number) => {
+      hideCatalog();
+      router.push({ path: "/product", query: { categoryId } });
+    };
+
+    return { ...toRefs(state), showCatalog, hideCatalog, showCategoryProducts };
   },
 });
 </script>
@@ -59,10 +67,5 @@ export default defineComponent({
 .sub-category {
   padding-top: 0.5rem;
   font-size: 18px;
-  cursor: pointer;
-}
-
-.sub-category:hover {
-  color: darkblue;
 }
 </style>

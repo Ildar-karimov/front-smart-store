@@ -34,6 +34,9 @@ const routes: Array<RouteRecordRaw> = [
     path: "/product",
     name: "ProductsPage",
     component: ProductsPage,
+    props: (route) => ({
+      categoryId: route.query.categoryId,
+    }),
     meta: {
       title: "Товары",
       auth: false,
