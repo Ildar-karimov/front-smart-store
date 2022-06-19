@@ -15,6 +15,7 @@ export enum AuthActions {
   REFRESH = "REFRESH",
   REGISTRATION = "REGISTRATION",
   CHECK_AUTH = "CHECK_AUTH",
+  SEND_TEST_DATA = "SEND_TEST_DATA",
 }
 
 export const actions: ActionTree<AuthState, RootState> = {
@@ -45,5 +46,9 @@ export const actions: ActionTree<AuthState, RootState> = {
     context.commit(AuthMutations.SET_IS_AUTHORIZED, true);
     localStorage.setItem("token", res.data.accessToken);
     context.commit(AuthMutations.SET_USER, res.data.user);
+  },
+
+  async [AuthActions.SEND_TEST_DATA](context, body) {
+    return await $api.post("/user/save-test", body);
   },
 };

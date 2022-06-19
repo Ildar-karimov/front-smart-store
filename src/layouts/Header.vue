@@ -39,9 +39,12 @@
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item>Профиль</el-dropdown-item>
-            <el-dropdown-item @click="showTestPage"
-              >Пройти тест</el-dropdown-item
+            <el-dropdown-item
+              v-if="user.userDatasetId === -1"
+              @click="showTestPage"
             >
+              Пройти тест
+            </el-dropdown-item>
             <el-dropdown-item @click="showOrders">Заказы</el-dropdown-item>
             <el-dropdown-item
               v-if="isUserAdmin"

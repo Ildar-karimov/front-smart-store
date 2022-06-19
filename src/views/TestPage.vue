@@ -138,12 +138,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from "vue";
+import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import $api from "@/api";
+import { useStore } from "vuex";
+import { AuthActions } from "@/store/modules/auth/actions";
+import { ElMessage } from "element-plus";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "TestDialog",
   setup() {
+    const store = useStore();
+    const router = useRouter();
+
     const state = reactive({
       categories: [],
       brands: [],
@@ -163,20 +170,22 @@ export default defineComponent({
       },
     });
 
-    const showTest = async () => {
-      state.testVisible = true;
+    onMounted(async () => {
       await $api.get("category").then((res) => (state.categories = res.data));
       await $api.get("brand").then((res) => (state.brands = res.data));
-    };
-    const hideTest = () => {
-      state.testVisible = false;
-    };
+    });
 
     const sendTestResult = () => {
-      console.log(123);
+      store.dispatch(AuthActions.SEND_TEST_DATA, state.testData).then(() => {
+        router.push({ path: "/" });
+        ElMessage({
+          message: "Спасибо!",
+          type: "success",
+        });
+      });
     };
 
-    return { ...toRefs(state), showTest, hideTest, sendTestResult };
+    return { ...toRefs(state), sendTestResult };
   },
 });
 </script>

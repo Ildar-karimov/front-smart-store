@@ -9,6 +9,7 @@ export interface User {
   email: string;
   role: string;
   id: number;
+  userDatasetId: number;
 }
 
 export interface LoginBody {
