@@ -6,6 +6,7 @@ import ProductsPage from "@/views/ProductsPage/index.vue";
 import LikedProductsPage from "@/views/LikedProductsPage.vue";
 import BasketPage from "@/views/BasketPage.vue";
 import CreateProductPage from "@/views/CreateProductPage/index.vue";
+import TestPage from "@/views/TestPage.vue";
 import Orders from "@/views/Orders.vue";
 import store from "@/store/index";
 import { AuthActions } from "@/store/modules/auth/actions";
@@ -85,6 +86,15 @@ const routes: Array<RouteRecordRaw> = [
     component: Orders,
     meta: {
       title: "Заказы",
+      auth: true,
+    },
+  },
+  {
+    path: "/test",
+    name: "TestPage",
+    component: TestPage,
+    meta: {
+      title: "Тест",
       auth: true,
     },
   },
