@@ -30,6 +30,14 @@ export const actions: ActionTree<AuthState, RootState> = {
     await $api.post("/user/logout");
     localStorage.removeItem("token");
     context.commit(AuthMutations.SET_IS_AUTHORIZED, false);
+    context.commit(AuthMutations.SET_USER, {
+      id: 0,
+      name: "",
+      surname: "",
+      email: "",
+      role: "",
+      userDatasetId: -1,
+    });
   },
 
   async [AuthActions.REGISTRATION](context, data: RegistrationBody) {

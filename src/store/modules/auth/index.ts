@@ -14,7 +14,7 @@ export const auth: Module<AuthState, RootState> = {
       surname: "",
       email: "",
       role: "",
-      userDatasetId: 0,
+      userDatasetId: -1,
     },
   },
   getters,
